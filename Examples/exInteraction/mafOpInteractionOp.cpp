@@ -86,6 +86,7 @@ void mafOpInteractionOp::OpRun()
   
   // add the VME Gizmo to the VME tree
   mafEventMacro( mafEvent( this, VME_ADD, m_Gizmo ) );
+  mafEventMacro( mafEvent( this, VME_SHOW, m_Gizmo, true ) );
 
 
 
@@ -117,7 +118,7 @@ void mafOpInteractionOp::OpRun()
 
   /******************************************************************************/
   /** UNCOMMENT HERE TO ATTACH THE INTERACTOR TO THE VME       (PASS 4)        */
-	/* *
+	
   m_Gizmo->SetBehavior(m_MouseInteractor);
   /******************************************************************************/
   
@@ -155,7 +156,7 @@ void mafOpInteractionOp::OpStop(int result)
 
   /******************************************************************************/
   /** UNCOMMENT HERE TO DETACH THE INTERACTOR FROM THE VME         (PASS 4)     */
-	/* *
+	
   m_Gizmo->SetBehavior(NULL);
   /******************************************************************************/
 

@@ -54,6 +54,9 @@ public:
   void SetPlaneOrigin(double x, double y, double z);
   vtkGetVectorMacro(PlaneOrigin, double, 3);
 
+  void SetPlaneDimensions(double w, double h);
+  void SetPlaneDimensions(double dimensions[2]); 
+
   /** Specify x-axis of the plane*/
   void SetPlaneAxisX(float axis[3]);
   vtkGetVectorMacro(PlaneAxisX, float, 3);
@@ -138,6 +141,9 @@ protected:
   // color mapping
   double Window;
   double Level;
+
+  double Width;
+  double Height;
 
   int   AutoSpacing;
 

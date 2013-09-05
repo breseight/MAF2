@@ -70,6 +70,7 @@
 #include "mafOpEditNormals.h"
 #include "mafOpVOIDensityEditor.h"
 #include "mafOpExporterRaw.h"
+#include "mafOpBooleanSurface.h"
 
 #ifdef MAF_USE_ITK
   #include "mafOpImporterASCII.h"
@@ -161,6 +162,9 @@ bool exOperationApp::OnInit()
   m_Logic->Plug(new mafOp2DMeasure("2D Measure"));
   m_Logic->Plug(new mafOpAddLandmark("Add Landmark"));
   m_Logic->Plug(new mafOpClipSurface("Clip Surface"));
+  m_Logic->Plug(new mafOpBooleanSurface("BooleanSurface"));
+  
+
   m_Logic->Plug(new mafOpCreateSurfaceParametric("Surface Parametric"),"Create");
   m_Logic->Plug(new mafOpCreateGroup("Group"),"Create");
   m_Logic->Plug(new mafOpCreateMeter("Meter"),"Create");

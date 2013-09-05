@@ -1,17 +1,14 @@
 /*=========================================================================
-
- Program: MAF2
- Module: mafPipePolyline
- Authors: Matteo Giacomoni - Daniele Giunchi
- 
- Copyright (c) B3C
- All rights reserved. See Copyright.txt or
- http://www.scsitaly.com/Copyright.htm for details.
-
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.  See the above copyright notice for more information.
-
+Program:   Multimod Application Framework
+Module:    $RCSfile: mafPipePolyline.h,v $
+Language:  C++
+Date:      $Date: 2009-07-13 12:23:23 $
+Version:   $Revision: 1.13.2.2 $
+Authors:   Matteo Giacomoni - Daniele Giunchi
+==========================================================================
+Copyright (c) 2002/2004
+CINECA - Interuniversity Consortium (www.cineca.it) 
+SCS s.r.l. - BioComputing Competence Centre (www.scsolutions.it - www.b3c.it)
 =========================================================================*/
 
 #ifndef __mafPipePolyline_H__
@@ -35,11 +32,6 @@ class mmaMaterial;
 class mafGUIMaterialButton;
 class vtkCaptionActor2D;
 
-#ifdef MAF_EXPORTS
-#include "mafDllMacros.h"
-EXPORT_STL_VECTOR(MAF_EXPORT,vtkCaptionActor2D*);
-#endif
-
 /**
   Class Name: mafPipePolyline
   Visualize Polyline inside a VTK Render Window with several modality:
@@ -51,7 +43,7 @@ EXPORT_STL_VECTOR(MAF_EXPORT,vtkCaptionActor2D*);
   It is also possible to create a spline of the polyline or visualize polyline resulted by a
   deformation of the original one.
 */
-class MAF_EXPORT mafPipePolyline : public mafPipe
+class mafPipePolyline : public mafPipe
 {
 public:
   /** RTTI Macro. */
@@ -111,10 +103,6 @@ public:
 
 	/** Calculate the cardinal spline over original polyline*/
   vtkPolyData *SplineProcess(vtkPolyData *polyData);
-
-   /** This Function prepares a polydata for vtktubefilter 
-      by removing consecutive points whit same coordinates */ 
-  vtkPolyData *LineProcess(vtkPolyData *polyData);
 
   /** Set Border Distance*/
   void SetDistanceBorder(double value){m_DistanceBorder = value;};
@@ -204,7 +192,7 @@ protected:
   
 	vtkColorTransferFunction *m_Table;
   mmaMaterial              *m_PolylineMaterial;
-	vtkPolyData              *m_PolyFilteredLine;
+	vtkPolyData              *m_PolySpline;
   mafGUIMaterialButton        *m_MaterialButton;
   std::vector<vtkCaptionActor2D *> m_CaptionActorList;
   

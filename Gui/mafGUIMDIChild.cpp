@@ -83,6 +83,7 @@ mafGUIMDIChild::~mafGUIMDIChild()
 void mafGUIMDIChild::OnSelect(wxCommandEvent &event) 
 //----------------------------------------------------------------------------
 {
+  SetFocus();
   Activate(); // allow activation with the RMouse too
 	wxWindow *rwi = (wxWindow*)event.GetEventObject();
   mafEventMacro(mafEvent(this,VIEW_SELECT,m_View,rwi));

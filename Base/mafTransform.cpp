@@ -1739,7 +1739,7 @@ double mafTransform::ProjectVectorOnAxis( const double *in_vector, const double 
   in_axis_norm[2] = in_axis[2];
 
   vtkMath::Normalize(in_axis_norm);
-
+               
   double dot = vtkMath::Dot(in_vector, in_axis_norm);
 
   //if an output vector is provided

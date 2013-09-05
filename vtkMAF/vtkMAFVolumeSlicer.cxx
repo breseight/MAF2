@@ -21,6 +21,7 @@
 
 #include "assert.h"
 
+
 vtkCxxRevisionMacro(vtkMAFVolumeSlicer, "$Revision: 1.2.2.3 $");
 vtkStandardNewMacro(vtkMAFVolumeSlicer);
 
@@ -107,6 +108,19 @@ void vtkMAFVolumeSlicer::SetPlaneAxisY(float axis[3])
     memcpy(GlobalPlaneAxisY, PlaneAxisY, sizeof(this->PlaneAxisY));
   }
   this->Modified();
+}
+//----------------------------------------------------------------------------
+void vtkMAFVolumeSlicer::SetPlaneDimensions(double w, double h) 
+	//----------------------------------------------------------------------------
+{
+	Width = w;
+	Height = h;
+}
+//----------------------------------------------------------------------------
+void vtkMAFVolumeSlicer::SetPlaneDimensions(double dimensions[2]) 
+	//----------------------------------------------------------------------------
+{
+	SetPlaneDimensions(dimensions[0],dimensions[1]);
 }
 //----------------------------------------------------------------------------
 void vtkMAFVolumeSlicer::SetPlaneOrigin(double origin[3])
@@ -218,6 +232,7 @@ void vtkMAFVolumeSlicer::ExecuteInformation()
           }
         }
         
+
         // find spacing now
         float maxSpacing = max(maxS - minS, maxT - minT);
         spacing[0] = spacing[1] = max(maxSpacing, 1.e-8f);
@@ -320,12 +335,46 @@ void vtkMAFVolumeSlicer::PrepareVolume()
     }
   }
 
+
+  
+   
+
+  //dimension
   this->DataBounds[0][0] = min(this->VoxelCoordinates[0][0], this->VoxelCoordinates[0][this->DataDimensions[0] - 1]);
   this->DataBounds[0][1] = max(this->VoxelCoordinates[0][0], this->VoxelCoordinates[0][this->DataDimensions[0] - 1]);
   this->DataBounds[1][0] = min(this->VoxelCoordinates[1][0], this->VoxelCoordinates[1][this->DataDimensions[1] - 1]);
   this->DataBounds[1][1] = max(this->VoxelCoordinates[1][0], this->VoxelCoordinates[1][this->DataDimensions[1] - 1]);
   this->DataBounds[2][0] = min(this->VoxelCoordinates[2][0], this->VoxelCoordinates[2][this->DataDimensions[2] - 1]);
   this->DataBounds[2][1] = max(this->VoxelCoordinates[2][0], this->VoxelCoordinates[2][this->DataDimensions[2] - 1]);
+
+  
+  /*double GlobalPlaneOriginMax[3];
+  GlobalPlaneOriginMax[0] = GlobalPlaneOrigin[0] + 25 * GlobalPlaneAxisX[0] + 10 * GlobalPlaneAxisY[0];
+  GlobalPlaneOriginMax[1] = GlobalPlaneOrigin[1] + 25 * GlobalPlaneAxisX[1] + 10 * GlobalPlaneAxisY[1];
+  GlobalPlaneOriginMax[2] = GlobalPlaneOrigin[2] + 25 * GlobalPlaneAxisX[2] + 10 * GlobalPlaneAxisY[2];
+
+  double GlobalPlaneOriginMin[3];
+  GlobalPlaneOriginMin[0] = GlobalPlaneOrigin[0] - 25 * GlobalPlaneAxisX[0] - 10 * GlobalPlaneAxisY[0];
+  GlobalPlaneOriginMin[1] = GlobalPlaneOrigin[1] - 25 * GlobalPlaneAxisX[1] - 10 * GlobalPlaneAxisY[1];
+  GlobalPlaneOriginMin[2] = GlobalPlaneOrigin[2] - 25 * GlobalPlaneAxisX[2] - 10 * GlobalPlaneAxisY[2];
+  
+  //bb 
+  double bbox[3][2] = { min(GlobalPlaneOriginMin[0],GlobalPlaneOriginMax[0]),
+	                    max(GlobalPlaneOriginMin[0],GlobalPlaneOriginMax[0]),
+						min(GlobalPlaneOriginMin[1],GlobalPlaneOriginMax[1]),
+						max(GlobalPlaneOriginMin[1],GlobalPlaneOriginMax[1]),
+						min(GlobalPlaneOriginMin[2],GlobalPlaneOriginMax[2]),
+						max(GlobalPlaneOriginMin[2],GlobalPlaneOriginMax[2])
+  };
+
+  this->DataBounds[0][0] = (bbox[0][0]==bbox[0][1])?(bbox[0][0] - 0.0001):bbox[0][0];
+  this->DataBounds[0][1] = (bbox[0][0]==bbox[0][1])?(bbox[0][1] + 0.0001):bbox[0][1];
+  this->DataBounds[1][0] = (bbox[1][0]==bbox[1][1])?(bbox[1][0] - 0.0001):bbox[1][0];
+  this->DataBounds[1][1] = (bbox[1][0]==bbox[1][1])?(bbox[1][1] + 0.0001):bbox[1][1];
+  this->DataBounds[2][0] = (bbox[2][0]==bbox[2][1])?(bbox[2][0] - 0.0001):bbox[2][0];
+  this->DataBounds[2][1] = (bbox[2][0]==bbox[2][1])?(bbox[2][1] + 0.0001):bbox[2][1];*/
+
+ 
 
   this->SamplingTableMultiplier[0] = SamplingTableSize / (this->DataBounds[0][1] - this->DataBounds[0][0]);
   this->SamplingTableMultiplier[1] = SamplingTableSize / (this->DataBounds[1][1] - this->DataBounds[1][0]);
@@ -360,6 +409,7 @@ void vtkMAFVolumeSlicer::ExecuteData(vtkPolyData *output)
   int   numberOfPoints = 0;
   bool  processedPoints[12];
   memset(processedPoints, 0, sizeof(processedPoints));
+  const float magicNumber = 1.e-3;
 
   int i=0;
   for (i = 0; i < 3; i++) 
@@ -380,7 +430,7 @@ void vtkMAFVolumeSlicer::ExecuteData(vtkPolyData *output)
         p[i] /= this->GlobalPlaneAxisZ[i];
 
         // check that p[i] is in inside the box
-        if (p[i] < this->DataBounds[i][0] || p[i] > this->DataBounds[i][1])
+        if (p[i] < this->DataBounds[i][0] - magicNumber  || p[i] > this->DataBounds[i][1] + magicNumber)
           continue;
 
         // ignore the same points (can it really happen?)

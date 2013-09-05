@@ -371,7 +371,8 @@ int mafVMEItemVTK::ReadData(mafString &filename, int resolvedURL)
     m_DecryptedFileString.clear();
     if (GetCrypting() && m_IOMode != MEMORY)
     {
-#ifdef MAF_USE_CRYPTO
+#ifdef MAF_USE_
+		CRYPTO
       mafDefaultDecryptFileInMemory(filename, m_DecryptedFileString);
 #else
       mafErrorMacro("Encrypted data not supported: MAF not linked to Crypto library.");

@@ -43,7 +43,7 @@ END_EVENT_TABLE()
 
 int     mafGUIRangeSlider::m_TriangleWidgetRadius = 5;
 wxPoint mafGUIRangeSlider::m_TriangleWidgetCenter(0, 5);
-wxPoint mafGUIRangeSlider::m_TriangleWidgetPoints[3] = { wxPoint(0, 0), wxPoint(5, 10), wxPoint(-5, 10) };
+wxPoint mafGUIRangeSlider::m_TriangleWidgetPoints[3] = { wxPoint(0, 0), wxPoint(7, 14), wxPoint(-7, 14) };
 
 //----------------------------------------------------------------------------
 mafGUIRangeSlider::mafGUIRangeSlider(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name) : wxControl(parent, id, pos, size, style) 
@@ -190,7 +190,7 @@ void mafGUIRangeSlider::RedrawWidgets(wxDC &dc, bool eraseWidgets)
     }
     else 
 		{
-      dc.SetBrush(i == 1 ? *wxWHITE_BRUSH : *wxLIGHT_GREY_BRUSH);
+      dc.SetBrush(i == 1 ? *wxRED_BRUSH : *wxBLACK_BRUSH);
       dc.DrawPolygon(3, m_TriangleWidgetPoints, positionX, positionY);
 
       dc.SetPen(darkGreyPen);
@@ -225,7 +225,7 @@ void mafGUIRangeSlider::OnMouse(wxMouseEvent &event)
         else
           newVal = clip(newVal, this->m_NumberOfWidgets != 2 ? this->m_Value[1] : this->m_Value[0], this->m_Range[1]);
       }
-
+	  mafEventMacro(mafEvent(this, this->GetId(), newVal));
       if (this->m_Value[this->m_SelectedTriangleWidget] == newVal)
         return; // the value did not change
 
