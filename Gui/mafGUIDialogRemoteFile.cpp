@@ -140,7 +140,7 @@ void mafGUIDialogRemoteFile::OnEvent(mafEventBase *maf_event)
       case ID_BROWSE_LOCAL_FILE:
       {
         mafString local_file = "";
-        mafString wildc = _("MAF Storage Format file (*.msf)|*.msf|Compressed file (*.zmsf)|*.zmsf");
+        mafString wildc = _("Project file (*.msf)|*.msf|Compressed file (*.zmsf)|*.zmsf");
         local_file = mafGetOpenFile("",wildc.GetCStr(),_("Open local file"),this).c_str();
         if (!local_file.IsEmpty())
         {

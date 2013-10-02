@@ -126,7 +126,7 @@ std::string mafGetSaveFile(const char * initial, const char * wild, const char *
   wxSplitPath(initial,&path,&name,&ext);
   if(name != "" && ext != "") name = wxString::Format("%s.%s",name.c_str(),ext.c_str());
   wxString wildcard = wild;
-  wxString defaultname = "newMAFfile";
+  wxString defaultname = "projectFile";
   wildcard += "|All Files (*.*)|*.*";
   //wxFileDialog dialog(parent,title, path, name, wildcard, wxSAVE|wxOVERWRITE_PROMPT|wxHIDE_READONLY);
   wxFileDialog dialog(parent,title, initial, defaultname, wildcard, wxSAVE|wxOVERWRITE_PROMPT|wxHIDE_READONLY);

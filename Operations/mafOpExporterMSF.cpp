@@ -60,7 +60,7 @@ mafOpExporterMSF::~mafOpExporterMSF()
 void mafOpExporterMSF::OpRun()   
 //----------------------------------------------------------------------------
 {
-	mafString wildc = "MAF Storage Format (*.msf)|*.msf";
+	mafString wildc = "Project File (*.msf)|*.msf";
 	mafString f;
   if (m_MSFFile.IsEmpty())
   {
