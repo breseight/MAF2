@@ -670,7 +670,7 @@ int mafVMEManager::MSFSave()
     SetSingleBinaryFile(e.GetBool()); // set the save modality for time-varying vme
     
     // ask for the new file name.
-    wxString wildc = _("MAF Storage Format file (*."+ m_file_extension +")|*."
+    wxString wildc = _("Project file (*."+ m_file_extension +")|*."
 		              + m_file_extension +"|Compressed file (*.z"+ m_file_extension +")|*.z" + m_file_extension + "");
     mafString file = mafGetSaveFile(m_MSFDir, wildc.c_str()).c_str();
     if(file.IsEmpty())
@@ -719,7 +719,7 @@ int mafVMEManager::MSFSave()
 	}
 	
   if(!m_TestMode) 
-    wait=new wxBusyInfo(_("Saving MSF: Please wait"));
+    wait=new wxBusyInfo(_("Saving Project: Please wait"));
   
   m_Storage->SetURL(m_MSFFile.GetCStr());
   if (m_Storage->Store() != MAF_OK) // store the tree
@@ -768,7 +768,7 @@ void mafVMEManager::Upload(mafString local_file, mafString remote_file)
 {
   if (m_Storage == NULL)
   {
-    mafMessage(_("Some problem occourred, MAF storage is NULL!!"), _("Warning"));
+    mafMessage(_("Some problem occourred, storage is NULL!!"), _("Warning"));
     return;
   }
   mafRemoteStorage *storage = (mafRemoteStorage *)m_Storage;

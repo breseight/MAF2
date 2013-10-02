@@ -1145,9 +1145,9 @@ void mafLogicWithManagers::OnFileOpen(const char *file_to_open)
       }
       else      
       {
-		    wxString wildc = _("MAF Storage Format file (*." + m_Extension + ")|*." + m_Extension 
+		    wxString wildc = _("Project file (*." + m_Extension + ")|*." + m_Extension 
 				                   +"|Compressed file (*.z" + m_Extension + ")|*.z" + m_Extension + "");
-		    //wxString wildc    = _("MAF Storage Format file (*.msf)|*.msf|Compressed file (*.zmsf)|*.zmsf");
+		    //wxString wildc    = _("Project Format file (*.msf)|*.msf|Compressed file (*.zmsf)|*.zmsf");
         if (file_to_open != NULL)
         {
           file = file_to_open;
