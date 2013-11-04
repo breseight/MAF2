@@ -1177,7 +1177,7 @@ int mafNode::InternalStore(mafStorageElement *parent)
   for (unsigned int i=0;i<GetNumberOfChildren();i++)
   {
     mafNode *node=GetChild(i);
-    if (node->IsVisible())
+    if (node->IsVisible() && !(node->GetTagArray()->IsTagPresent("STORABLE") && node->GetTagArray()->GetTag("STORABLE")->GetValueAsDouble() == 0 ) )
     {
       nodes_to_store.push_back(node);
     }

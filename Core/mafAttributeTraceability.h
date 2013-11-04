@@ -67,6 +67,8 @@ public:
   /** return trial type form vetor of traceability event*/
   mafString GetLastTrialEvent();
 
+  mafString GetLastOperation();
+
   std::vector<m_Traceability> m_TraceabilityVector;
 
 protected:
