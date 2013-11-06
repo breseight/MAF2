@@ -88,7 +88,17 @@ mafSideBar::mafSideBar(wxWindow* parent, int id, mafObserver *Listener, long sty
     m_SideSplittedPanel->SetMinimumPaneSize(50);
     m_SideSplittedPanel->SplitHorizontally(m_Tree,m_VmeNotebook);
   }
-  else
+  else if (style == SINGLE_NOTEBOOK_EMPTY_BOTTOM)
+  {
+	      m_VmePanel = new mafGUIHolder(m_Notebook,-1,false,true);
+    m_Notebook->AddPage(m_VmePanel ,_("vme"));
+
+    m_VmeOutputPanel = new mafGUIHolder(m_SideSplittedPanel,-1,false,true);
+    m_VmeOutputPanel->Show(false);
+    m_SideSplittedPanel->SetMinimumPaneSize(5);
+    m_SideSplittedPanel->SplitHorizontally(m_Tree,m_VmeOutputPanel);
+  }
+  else if (style == SINGLE_NOTEBOOK)
   {
     m_VmePanel = new mafGUIHolder(m_Notebook,-1,false,true);
     m_Notebook->AddPage(m_VmePanel ,_("vme"));
@@ -309,6 +319,82 @@ void mafSideBar::UpdateVmePanel()
 	  m_OldAppendingGUI = m_NewAppendingGUI;
 	
 	  m_VmeOutputPanel->Put(vme_out_gui);
+  }
+    if (m_Style == SINGLE_NOTEBOOK_EMPTY_BOTTOM)
+  {
+	  if(m_SelectedVme)
+	  {
+	    vme_gui = m_SelectedVme->GetGui();
+	
+	    if(m_SelectedVme->IsMAFType(mafVME))
+	    {
+	      mafVME *v = (mafVME*) m_SelectedVme;
+	      vme_out = v->GetOutput();
+	      if(!vme_out->IsA("mafVMEOutputNULL")) // Paolo 2005-05-05
+	      {
+	        vme_out_gui = vme_out->GetGui();
+	        if (!v->IsDataAvailable())
+	        {
+	          vme_out->Update();
+	        }
+	      }
+	      else
+	        vme_out = NULL;
+	    }
+	
+	    if (m_OldAppendingGUI)
+	    {
+	      if (m_CurrentVmeGui)
+	      {
+	        m_OldAppendingGUI->Remove(m_CurrentVmeGui);
+	      }
+	      /*if (m_CurrentPipeGui)
+	      {
+	        m_OldAppendingGUI->Remove(m_CurrentPipeGui);
+	      }*/
+	    }
+	
+	    if(m_SelectedView)
+	    {
+	      vme_pipe = m_SelectedView->GetNodePipe(m_SelectedVme);
+	
+	      if(vme_pipe)
+	      {
+	        vme_pipe_gui = vme_pipe->GetGui();
+	      }
+	    }
+	  }
+	
+	  m_NewAppendingGUI = NULL;
+	
+	  m_CurrentPipeGui = vme_pipe_gui;
+	  m_CurrentVmeGui = vme_gui;
+	
+	  if (vme_gui || vme_pipe_gui)
+	  {
+	    m_NewAppendingGUI = new mafGUI(NULL);
+	
+	    if (vme_gui)
+	    {
+	      m_NewAppendingGUI->AddGui(vme_gui);
+	      m_NewAppendingGUI->FitGui();
+	      m_NewAppendingGUI->Update();
+	    }
+	    if (vme_pipe_gui)
+	    {
+	      m_NewAppendingGUI->Label(_("GUI visual Pipes"),true);
+	      m_NewAppendingGUI->AddGui(vme_pipe_gui);
+	      m_NewAppendingGUI->FitGui();
+	      m_NewAppendingGUI->Update();
+	    }
+	  }
+	
+	
+	  //m_VmePanel->Put(m_NewAppendingGUI);
+	
+	  m_OldAppendingGUI = m_NewAppendingGUI;
+	
+	  //m_VmeOutputPanel->Put(vme_out_gui);
   }
   else if (m_Style == DOUBLE_NOTEBOOK)
   {

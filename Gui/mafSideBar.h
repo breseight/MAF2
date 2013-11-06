@@ -50,7 +50,8 @@ public:
   enum SIDEBAR_STYLE
   {
     SINGLE_NOTEBOOK,
-    DOUBLE_NOTEBOOK
+    DOUBLE_NOTEBOOK,
+	SINGLE_NOTEBOOK_EMPTY_BOTTOM,
   };
 
   // Description:
