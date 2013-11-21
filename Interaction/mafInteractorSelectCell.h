@@ -59,6 +59,9 @@ public:
   /** redefined to end pick modality */
   virtual void OnButtonUp(mafEventInteraction *e);
 
+  /** Enable/disable continuous picking in OnEvent. */
+  void EnableContinuousPicking(bool enable) {m_ContinuousPickingFlag = enable;};
+
 protected:
   mafInteractorSelectCell();
   virtual ~mafInteractorSelectCell();
@@ -67,6 +70,7 @@ protected:
   void PickCell(mafDevice *device);
 
   bool m_IsPicking;
+  bool m_ContinuousPickingFlag;
 
 private:
   mafInteractorSelectCell(const mafInteractorSelectCell&);  // Not implemented.

@@ -45,6 +45,7 @@ mafInteractorSelectCell::mafInteractorSelectCell()
 //------------------------------------------------------------------------------
 {
   m_IsPicking = false;
+  m_ContinuousPickingFlag = true;
 }
 
 //------------------------------------------------------------------------------
@@ -131,24 +132,26 @@ void mafInteractorSelectCell::OnEvent(mafEventBase *event)
   // if we are in pick modality...
   if (m_IsPicking)
   {
-    // is this an interaction event?
-    mafEventInteraction* eventInteraction = NULL;
-    eventInteraction = mafEventInteraction::SafeDownCast(event);
+	if(m_ContinuousPickingFlag) {
+        // is this an interaction event?
+		mafEventInteraction* eventInteraction = NULL;
+		eventInteraction = mafEventInteraction::SafeDownCast(event);
 
-    // if yes handle the picking
-    if (eventInteraction != NULL)
-    {
-      // is it coming from the mouse?
-      if (mafDeviceButtonsPadMouse *mouse=mafDeviceButtonsPadMouse::SafeDownCast((mafDevice *)eventInteraction->GetSender()))
-      { 
-        PickCell(mouse);
-      }
-      else
-      {
-        mafLogMessage("only handling events from the mouse!more code is required in order to handle this device!");
-        assert(false);
-      } 
-    }
+		// if yes handle the picking
+		if (eventInteraction != NULL)
+		{
+		  // is it coming from the mouse?
+		  if (mafDeviceButtonsPadMouse *mouse=mafDeviceButtonsPadMouse::SafeDownCast((mafDevice *)eventInteraction->GetSender()))
+		  { 
+			PickCell(mouse);
+		  }
+		  else
+		  {
+			mafLogMessage("only handling events from the mouse!more code is required in order to handle this device!");
+			assert(false);
+		  } 
+		}
+	}
   } 
 
   Superclass::OnEvent(event);
