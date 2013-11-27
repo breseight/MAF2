@@ -274,6 +274,19 @@ const char *mafXMLStorage::GetDocumentVersion()
   return m_DocumentVersion;
 }
 //------------------------------------------------------------------------------
+void mafXMLStorage::SetDictionaryName(const char *dictionaryName)
+	//------------------------------------------------------------------------------
+{
+	m_DictionaryName=dictionaryName; // force string copying
+}
+//------------------------------------------------------------------------------
+const char *mafXMLStorage::GetDictionaryName()
+	//------------------------------------------------------------------------------
+{
+	return m_DictionaryName;
+}
+
+//------------------------------------------------------------------------------
 void mafXMLStorage::EmptyGarbageCollector()
 //------------------------------------------------------------------------------
 {
@@ -340,7 +353,8 @@ int mafXMLStorage::InternalStore()
         assert(root);
         m_DocumentElement = new mafXMLElement(new mmuXMLDOMElement(root),NULL,this);
 
-        // attach version attribute to the root node
+        // attach version attribute to the root node		
+	    m_DocumentElement->SetAttribute("Name",m_DictionaryName);
         m_DocumentElement->SetAttribute("Version",m_Version);
       
         // call Store function of the m_Document object. The root is passed
@@ -475,6 +489,7 @@ int mafXMLStorage::InternalRestore()
 
           if (m_FileType == m_DocumentElement->GetName())
           {
+			m_DocumentElement->GetAttribute("Name",m_DictionaryName);
             if (m_DocumentElement->GetAttribute("Version",m_DocumentVersion))
             {
               double doc_version_f = atof(m_DocumentVersion);

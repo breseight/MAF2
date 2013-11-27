@@ -59,6 +59,9 @@ public:
   void SetVersion(const char *version);
 
   /** The version of the file format used type of file. (default "1.1") */
+  void SetDictionaryName(const char *dictionaryName);
+
+  /** The version of the file format used type of file. (default "1.1") */
   const char *GetVersion();
 
   /** Return the version of the opened document.*/
@@ -87,6 +90,9 @@ public:
   /** empty the garbage collector list deleting old files */
   virtual void EmptyGarbageCollector();
 
+  /** get dictionary name */
+  const char *GetDictionaryName();
+
 protected:
   /** This is called by Store() and must be reimplemented by subclasses */
   virtual int InternalStore();
@@ -94,6 +100,7 @@ protected:
   /** This is called by Restore() and must be reimplemented by subclasses */
   virtual int InternalRestore();
 
+  mafString m_DictionaryName;  ///< name of the dictionary
   mafString m_FileType;  ///< The type of file to be opened
   mafString m_Version;   ///< Current MSF version
   mafString m_DocumentVersion; ///< Open Document version.
