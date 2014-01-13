@@ -220,12 +220,12 @@ void mafViewVTK::VmeSelect(mafNode *vme, bool select)
   m_Sg->VmeSelect(vme,select);
 }
 //----------------------------------------------------------------------------
-void mafViewVTK::CameraSet(int camera_position) 
+void mafViewVTK::CameraSet(int camera_position, double zoom, double elevation, double azimuth) 
 //----------------------------------------------------------------------------
 {
   assert(m_Rwi);
   m_CameraPositionId = camera_position; 
-  m_Rwi->CameraSet(camera_position);
+  m_Rwi->CameraSet(camera_position, zoom, elevation, azimuth);
 }
 //----------------------------------------------------------------------------
 void mafViewVTK::CameraReset(mafNode *node)

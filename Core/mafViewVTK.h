@@ -111,7 +111,7 @@ public:
   virtual void OptionsUpdate();
 
 	virtual void CameraReset(mafNode *node = NULL);
-  virtual void CameraSet(int camera_position);
+  virtual void CameraSet(int camera_position, double zoom = 1., double elevation = 0., double azimuth = 0.);
   virtual void CameraUpdate();
   virtual int GetCameraPosition();
 

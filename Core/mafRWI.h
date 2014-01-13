@@ -75,11 +75,11 @@ public:
 	void CameraUpdate();
 
 	/** Set the camera position. */
-	void CameraSet(int cam_position, double zoom = 1);
+	void CameraSet(int cam_position, double zoom = 1, double elevation = 0., double azimuth = 0.);
 
 
 	/** Set the camera position, set custom pos , custom viewUp , zoom and if projection is parallel */
-	void CameraSet(double pos[3],double viewUp[3], double zoom = 1., bool parallelProjection = false);
+	void CameraSet(double pos[3],double viewUp[3], double zoom = 1., bool parallelProjection = false, double elevation = 0., double azimuth = 0.);
 
 	/** Set the render window's size. */
 	void SetSize(int x, int y, int w,int h);

@@ -332,7 +332,7 @@ mafRWI::~mafRWI()
 	vtkDEL(m_RwiBase);  //The renderer has to be Deleted as last
 }
 //-----------------------------------------------------------------------------------------
-void mafRWI::CameraSet(int cam_position, double zoom)
+void mafRWI::CameraSet(int cam_position, double zoom, double elevation, double azimuth)
 //-----------------------------------------------------------------------------------------
 {
 	int x,y,z,vx,vy,vz;
@@ -450,13 +450,16 @@ void mafRWI::CameraSet(int cam_position, double zoom)
 	m_Camera->SetFocalPoint(0,0,0);
 	m_Camera->SetPosition(x*100,y*100,z*100);
 	m_Camera->SetViewUp(vx,vy,vz);
+
+	m_Camera->Elevation(elevation);
+	m_Camera->Azimuth(azimuth);
 	m_Camera->SetClippingRange(0.1,1000);
 
 	CameraReset((mafNode*)NULL, zoom);
 }
 
 //----------------------------------------------------------------------------
-void mafRWI::CameraSet( double pos[3],double viewUp[3], double zoom /*= 1.*/, bool parallelProjection /*= false*/ )
+void mafRWI::CameraSet( double pos[3],double viewUp[3], double zoom /*= 1.*/, bool parallelProjection /*= false*/, double elevation, double azimuth)
 //----------------------------------------------------------------------------
 {
 	if (parallelProjection)
@@ -467,6 +470,10 @@ void mafRWI::CameraSet( double pos[3],double viewUp[3], double zoom /*= 1.*/, bo
 	m_Camera->SetFocalPoint(0,0,0);
 	m_Camera->SetPosition(pos[0]*100,pos[1]*100,pos[2]*100);
 	m_Camera->SetViewUp(viewUp[0],viewUp[1],viewUp[2]);
+
+	m_Camera->Elevation(elevation);
+	m_Camera->Azimuth(azimuth);
+
 	m_Camera->SetClippingRange(0.1,1000);
 
 	CameraReset((mafNode*)NULL, zoom);
