@@ -26,7 +26,7 @@
 USING_NAMESPACE(CryptoPP)
 USING_NAMESPACE(std)
 
-const char * defaultPhrase="fattinonfostepervivercomebruti";
+const char * defaultPhrase="AgFi830Kol1l";
 
 //----------------------------------------------------------------------------
 const char *mafDefaultPassPhrase()

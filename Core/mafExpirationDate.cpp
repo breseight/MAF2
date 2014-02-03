@@ -242,12 +242,12 @@ void mafExpirationDate::CheckFile()
 		toEncrypt.append("\n");
 		toEncrypt.append(tempCurrentDateTime);
 
-		mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ControlFileName.c_str(), "fattinonfostepervivercomebruti");
+		mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ControlFileName.c_str(), "AgFi830Kol1l");
 	}
 
 	//read it
 	std::string toDecrypt;
-	mafDecryptFileInMemory(m_ControlFileName.c_str(), toDecrypt, "fattinonfostepervivercomebruti");
+	mafDecryptFileInMemory(m_ControlFileName.c_str(), toDecrypt, "AgFi830Kol1l");
 
 	std::stringstream ss;
 	ss << toDecrypt;
@@ -272,7 +272,7 @@ void mafExpirationDate::CheckFile()
 	toEncrypt.append(tempCurrentDateTime);
 	toEncrypt.append("\n");
 
-	mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ControlFileName.c_str(), "fattinonfostepervivercomebruti");
+	mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ControlFileName.c_str(), "AgFi830Kol1l");
 
 	//debug file
 	/*std::ofstream os2;
@@ -320,12 +320,12 @@ void mafExpirationDate::CheckApplicationVersion()
 		std::string toEncrypt;
 		toEncrypt.append(m_ApplicationVersion);
 
-		mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ApplicationVersionFileName.c_str(), "fattinonfostepervivercomebruti");
+		mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ApplicationVersionFileName.c_str(), "AgFi830Kol1l");
 	}
 
 	//read it
 	std::string toDecrypt;
-	mafDecryptFileInMemory(m_ApplicationVersionFileName.c_str(), toDecrypt, "fattinonfostepervivercomebruti");
+	mafDecryptFileInMemory(m_ApplicationVersionFileName.c_str(), toDecrypt, "AgFi830Kol1l");
 
 	std::stringstream ss;
 	ss << toDecrypt;
@@ -376,7 +376,7 @@ void mafExpirationDate::CheckApplicationVersion()
 			std::string toEncrypt;
 			toEncrypt.append(m_ApplicationVersion);
 
-			mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ApplicationVersionFileName.c_str(), "fattinonfostepervivercomebruti");
+			mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ApplicationVersionFileName.c_str(), "AgFi830Kol1l");
 		}
 	}
 	else if(substringsOld[APP_MAJOR_VERSION].compare(substringsCurrent[APP_MAJOR_VERSION]) == 0 &&
@@ -397,7 +397,7 @@ void mafExpirationDate::CheckApplicationVersion()
 			std::string toEncrypt;
 			toEncrypt.append(m_ApplicationVersion);
 
-			mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ApplicationVersionFileName.c_str(), "fattinonfostepervivercomebruti");
+			mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_ApplicationVersionFileName.c_str(), "AgFi830Kol1l");
 		}
 	}
 	else
@@ -547,7 +547,7 @@ void mafExpirationDate::ActivatePermanentExpiration()
 	std::string toEncrypt;
 	toEncrypt.append(tmpExpirationDateTicksString);
 
-	mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_PermanentExpirationFileName.c_str(), "fattinonfostepervivercomebruti");
+	mafEncryptFileFromMemory(toEncrypt.c_str(),toEncrypt.length(),m_PermanentExpirationFileName.c_str(), "AgFi830Kol1l");
 }
 //----------------------------------------------------------------------------
 void mafExpirationDate::Obfuscate(std::string &toObfuscate) 
@@ -585,7 +585,7 @@ long mafExpirationDate::GetExpirationDateTicksFromPermanentExpirationFile()
 {
 	// read the v file
 	std::string toDecrypt;
-	mafDecryptFileInMemory(m_PermanentExpirationFileName.c_str(), toDecrypt, "fattinonfostepervivercomebruti");
+	mafDecryptFileInMemory(m_PermanentExpirationFileName.c_str(), toDecrypt, "AgFi830Kol1l");
 
 	std::stringstream ss;
 	ss << toDecrypt;

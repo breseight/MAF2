@@ -119,6 +119,7 @@ mafGUIMDIFrame::mafGUIMDIFrame(const wxString& title, const wxPoint& pos, const 
   mafSetFrame( this );
 
   this->SetMinSize(wxSize(600,500)); // m_DockManager cant handle correctly the frame MinSize (yet)
+
   m_DockManager.SetFrame(this);
   m_DockManager.GetArtProvider()->SetMetric(wxAUI_ART_PANE_BORDER_SIZE,0 );
   m_DockManager.GetArtProvider()->SetColor(wxAUI_ART_INACTIVE_CAPTION_COLOUR, m_DockManager.GetArtProvider()->GetColor(wxAUI_ART_ACTIVE_CAPTION_COLOUR));

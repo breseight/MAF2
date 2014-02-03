@@ -163,7 +163,7 @@ void mafLogicWithManagers::Configure()
       .Caption(wxT("ControlBar"))
       .Right()
       .Layer(2)
-      .MinSize(240,450)
+      .MinSize(220,450)
       .TopDockable(false)
       .BottomDockable(false)
       );
