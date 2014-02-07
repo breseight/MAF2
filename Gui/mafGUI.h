@@ -229,7 +229,7 @@ public:
   void OkCancel(int alignment = wxALL);
 
   /** Integer slider widget. */
-	wxSlider *Slider(int id, wxString label, int *var,int min = MININT, int max = MAXINT, wxString tooltip = "",bool showText=true);
+	wxSlider *Slider(int id, wxString label, int *var,int min = MININT, int max = MAXINT, wxString tooltip = "",bool showText=true, wxSize sliderSize = wxSize(-1,-1));
 
   /** Float slider widget.*/
   mafGUIFloatSlider *FloatSlider(int id, wxString label, double *var,double min, double max, wxSize size = wxDefaultSize, wxString tooltip = "", bool textBoxEnable = true);

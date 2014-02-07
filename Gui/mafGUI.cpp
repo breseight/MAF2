@@ -893,7 +893,7 @@ void mafGUI::Bool(int id,mafString label,int* var, int flag, mafString tooltip) 
   }
 }
 //----------------------------------------------------------------------------
-wxSlider *mafGUI::Slider(int id,wxString label,int* var,int min, int max, wxString tooltip,bool showText)
+wxSlider *mafGUI::Slider(int id,wxString label,int* var,int min, int max, wxString tooltip,bool showText, wxSize sliderSize)
 //----------------------------------------------------------------------------
 {
   wxTextCtrl   *text = NULL;
@@ -910,7 +910,11 @@ wxSlider *mafGUI::Slider(int id,wxString label,int* var,int min, int max, wxStri
 		text = new wxTextCtrl (this, w_id_text, "", dp, wxSize(text_w,  LH), m_EntryStyle);
     text->SetFont(m_Font);
     w_id_sli = GetWidgetId(id);
-		sli = new wxSlider(this, w_id_sli,min,min,max, dp, wxSize(slider_w,LH));
+	if(sliderSize.GetX() < 0 || sliderSize.GetY() < 0) {
+		sliderSize = wxSize(slider_w,LH);
+	}
+
+		sli = new wxSlider(this, w_id_sli,min,min,max, dp, sliderSize);
     if(m_UseBackgroundColor) 
       sli->SetBackgroundColour(m_BackgroundColor);
     
