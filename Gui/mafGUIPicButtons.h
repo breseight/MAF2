@@ -53,7 +53,7 @@ public:
   void SetListener(mafObserver *Listener) {m_Listener = Listener;};
 
   void OnEvent(mafEventBase *maf_event);
-  void SetPictureVector(std::vector<std::string> &pictures);
+  void SetPictureVector(std::vector<wxString> &pictures);
   void Create();
   void ActivateButton(int index, bool activated);
   void DeActivateAllButtons();
@@ -80,8 +80,8 @@ protected:
   wxFlexGridSizer		  *m_Sizer;
   //mafGUIPicButton		*m_TimeBarButtons[MOVIE_BUTTONS_NUM];
   std::vector<mafGUIPicButton *> m_PicButtons;
-  std::vector<std::string> m_Pictures;
-  std::vector<std::vector<std::string> >m_ButtonsInfo;
+  std::vector<wxString> m_Pictures;
+  std::vector<std::vector<wxString> >m_ButtonsInfo;
 
   mafObserver     *m_Listener;
   int              m_NumberOfButtons;

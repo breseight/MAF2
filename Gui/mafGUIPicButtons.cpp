@@ -92,8 +92,14 @@ void mafGUIPicButtons::LoadFile(mafString filename)
 			std::istream_iterator<std::string> beg(buf), end;
 			std::vector<std::string> tokens(beg, end);
 
+			int h=0 , size = tokens.size();
+			std::vector<wxString> tokens2;
+			for(;h<size;++h) {
+				tokens.push_back(tokens.at(h));
+			}
+
 			m_Pictures.push_back(tokens[0].c_str());
-			m_ButtonsInfo.push_back(tokens);
+			m_ButtonsInfo.push_back(tokens2);
 			
 		}
 		myfile.close();
@@ -267,7 +273,7 @@ void mafGUIPicButtons::DisableAllButtons()
 	}
 }
 //----------------------------------------------------------------------------
-void mafGUIPicButtons::SetPictureVector(std::vector<std::string> &pictures)
+void mafGUIPicButtons::SetPictureVector(std::vector<wxString> &pictures)
 //----------------------------------------------------------------------------
 {
   assert(pictures.size() == m_NumberOfButtons);
