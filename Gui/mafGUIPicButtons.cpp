@@ -95,7 +95,7 @@ void mafGUIPicButtons::LoadFile(mafString filename)
 			int h=0 , size = tokens.size();
 			std::vector<wxString> tokens2;
 			for(;h<size;++h) {
-				tokens.push_back(tokens.at(h));
+				tokens2.push_back(tokens.at(h).c_str());
 			}
 
 			m_Pictures.push_back(tokens[0].c_str());
