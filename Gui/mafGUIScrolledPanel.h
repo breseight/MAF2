@@ -56,6 +56,7 @@ public:
 
 protected:
   wxBoxSizer *m_Sizer;
+  void OnScroll(wxScrollWinEvent& event);
 
 DECLARE_EVENT_TABLE()
 };

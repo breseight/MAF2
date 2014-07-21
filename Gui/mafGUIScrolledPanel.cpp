@@ -31,6 +31,7 @@
 //----------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(mafGUIScrolledPanel,wxScrolledWindow)
   //EVT_BUTTON (ID_EPANEL, wxEPanel::OnButton)
+  EVT_SCROLLWIN(mafGUIScrolledPanel::OnScroll)
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 mafGUIScrolledPanel::mafGUIScrolledPanel(wxWindow* parent,wxWindowID id)
@@ -101,3 +102,12 @@ void mafGUIScrolledPanel::FitInside()
   this->SetScrollbars(0, 10,0, m_Sizer->GetMinSize().GetHeight()/10,0,pos_new);
   wxScrolledWindow::Layout();    
 }
+
+//----------------------------------------------------------------------------
+void mafGUIScrolledPanel::OnScroll(wxScrollWinEvent& event)
+//----------------------------------------------------------------------------
+{
+	wxScrolledWindow::OnScroll(event);
+	Refresh(true);
+}
+
