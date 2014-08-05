@@ -75,6 +75,7 @@ mafVMEManager::mafVMEManager()
   m_FileSystem = NULL;
 
   m_TestMode = false;
+  m_ForceZipStorage = false;
 }
 //----------------------------------------------------------------------------
 mafVMEManager::~mafVMEManager()
@@ -265,6 +266,7 @@ int mafVMEManager::MSFOpen(mafString filename)
   wxWindowDisabler *disableAll;
   wxBusyCursor *wait_cursor;
 
+
   if(!m_TestMode) // Losi 02/16/2010 for test class
   {
     disableAll = new wxWindowDisabler();
@@ -273,6 +275,8 @@ int mafVMEManager::MSFOpen(mafString filename)
   
   mafString protocol = "";
   bool remote_file = IsRemote(filename, protocol); // check if the specified path refers to a remote location
+
+  
   
   // open a local msf
   if(!remote_file && !::wxFileExists(filename.GetCStr()))
@@ -345,6 +349,11 @@ int mafVMEManager::MSFOpen(mafString filename)
       return MAF_ERROR;
     }
     wxSetWorkingDirectory(m_TmpDir.GetCStr());
+  } else {
+	  if(m_ForceZipStorage){
+		  mafLogMessage("Open only compressed projects");
+		  return MAF_ERROR;
+	  }
   }
   
   // convert to unix format
@@ -669,10 +678,16 @@ int mafVMEManager::MSFSave()
     mafEventMacro(e);
     SetSingleBinaryFile(e.GetBool()); // set the save modality for time-varying vme
     
+	mafString file;
+	if(m_ForceZipStorage) {
     // ask for the new file name.
-    wxString wildc = _("Project file (*."+ m_file_extension +")|*."
-		              + m_file_extension +"|Compressed file (*.z"+ m_file_extension +")|*.z" + m_file_extension + "");
-    mafString file = mafGetSaveFile(m_MSFDir, wildc.c_str()).c_str();
+		wxString wildc = _("Compressed file (*.z"+ m_file_extension +")|*.z" + m_file_extension + "");
+		file = mafGetSaveFile(m_MSFDir, wildc.c_str()).c_str();
+	} else {
+		wxString wildc = _("Project file (*."+ m_file_extension +")|*."
+			+ m_file_extension +"|Compressed file (*.z"+ m_file_extension +")|*.z" + m_file_extension + "");
+		file = mafGetSaveFile(m_MSFDir, wildc.c_str()).c_str();
+	}
     if(file.IsEmpty())
       return MAF_ERROR;
    

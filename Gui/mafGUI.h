@@ -191,7 +191,7 @@ public:
   void Radio(int id,wxString label, int *var, int numchoices = 0, const wxString choices[] = NULL, int dim = 1, wxString tooltip = "", int style = wxRA_SPECIFY_COLS);
 
   /** Combo widget. */
-  wxComboBox *Combo(int id,mafString label, int *var, int numchoices = 0, const wxString choices[] = NULL, mafString tooltip = "");
+  wxComboBox *Combo(int id,mafString label, int *var, int numchoices = 0, const wxString choices[] = NULL, mafString tooltip = "", wxSize fontSize = wxSize(-1, -1), wxSize widgetsSize = wxSize(-1, -1));
 
   /** File open dialog widget. */
   void FileOpen(int id,mafString label,mafString *var, const mafString wildcard = "", mafString tooltip = "");

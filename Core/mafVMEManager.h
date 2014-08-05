@@ -163,6 +163,8 @@ public:
   /** Set the flag for test mode without GUI */
   void SetTestMode(bool testmode){m_TestMode = testmode;}; // Losi 02/16/2010 for test class
 
+  void ForceZipStorage() {m_ForceZipStorage = true;}
+
 protected:
   /** Create a compressed msf file: zmsf.*/
   bool MakeZip(const mafString &zipname, wxArrayString *files);
@@ -197,6 +199,7 @@ protected:
   bool                m_SingleBinaryFile; ///< used to store binary files associated to time varying VMEs as multiple files or not.
   mafVMEStorage*      m_Storage;          ///< Associated storage
   bool                m_TestMode;         ///< set true for test mode without GUI
+  bool                m_ForceZipStorage;
 
   /** friend test class */
   friend class mafVMEManagerTest; // Losi 02/16/2010 for test class

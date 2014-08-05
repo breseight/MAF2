@@ -1111,30 +1111,46 @@ void mafGUI::Radio(int id,wxString label,int* var, int numchoices, const wxStrin
     radio->SetToolTip(tooltip);
 }
 //----------------------------------------------------------------------------
-wxComboBox *mafGUI::Combo(int id,mafString label,int* var,int numchoices, const wxString choices[], mafString tooltip)
+wxComboBox *mafGUI::Combo(int id,mafString label,int* var,int numchoices, const wxString choices[], mafString tooltip, wxSize fontSize, wxSize widgetsSize)
 //----------------------------------------------------------------------------
 {
+  wxFont font(m_Font);
+  if(fontSize.GetWidth() != -1 || fontSize.GetHeight() != -1) {
+	  font.SetPixelSize(fontSize);
+  }
+
+  wxSize labelSize(wxSize(LW,-1));
+  wxSize comboSize(wxSize(DW,-1));
+  wxSize aloneComboSize(wxSize(FW,-1));
+  if(widgetsSize.GetWidth() != -1 || widgetsSize.GetHeight() != -1) {
+	  labelSize.SetWidth(widgetsSize.GetWidth()/3.);
+	  labelSize.SetHeight(widgetsSize.GetHeight());
+	  comboSize.SetWidth(widgetsSize.GetWidth() - labelSize.GetWidth());
+	  comboSize.SetHeight(widgetsSize.GetHeight());
+	  aloneComboSize = widgetsSize;
+  }
+
 	wxComboBox *combo = NULL;
   wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
   int w_id;
 
   if(!label.IsEmpty())
   {
-    wxStaticText *lab = new wxStaticText(this, GetWidgetId(id), label.GetCStr(), dp, wxSize(LW,-1), wxALIGN_RIGHT | wxST_NO_AUTORESIZE );
+    wxStaticText *lab = new wxStaticText(this, GetWidgetId(id), label.GetCStr(), dp, labelSize, wxALIGN_RIGHT | wxST_NO_AUTORESIZE );
     if(m_UseBackgroundColor) 
       lab->SetBackgroundColour(m_BackgroundColor);
-    lab->SetFont(m_Font);
+    lab->SetFont(font);
     w_id = GetWidgetId(id);
-	  combo = new wxComboBox  (this, w_id, "", dp, wxSize(DW,-1), numchoices, choices,wxCB_READONLY);
-	  combo->SetFont(m_Font);
+	  combo = new wxComboBox  (this, w_id, "", dp, comboSize, numchoices, choices,wxCB_READONLY);
+	  combo->SetFont(font);
     sizer->Add( lab,  0, wxRIGHT, LM);
 	  sizer->Add( combo,0, wxRIGHT, HM);
   }
   else
   {
     w_id = GetWidgetId(id);
-	  combo = new wxComboBox  (this, w_id, "", dp, wxSize(FW,-1), numchoices, choices,wxCB_READONLY);
-	  combo->SetFont(m_Font);
+	  combo = new wxComboBox  (this, w_id, "", dp, aloneComboSize, numchoices, choices,wxCB_READONLY);
+	  combo->SetFont(font);
     sizer->Add( combo,0, wxRIGHT, HM);
   }
   

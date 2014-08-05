@@ -191,6 +191,7 @@ void mafInteractorPicker::SendPickingInformation(mafView *v, double *mouse_pos, 
         mafEvent pick_event(this,msg_id,p);
         pick_event.SetDouble(scalar_value);
         pick_event.SetArg(pid);
+		pick_event.SetView(v);
         mafEventMacro(pick_event);
         p->Delete();
       }
