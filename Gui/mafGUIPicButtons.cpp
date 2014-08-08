@@ -57,26 +57,12 @@ mafGUIPicButtons::mafGUIPicButtons( wxWindow* parent,wxWindowID id, int numberOf
   m_ButtonsType = ID_RADIO_BUTTON;
 }
 //----------------------------------------------------------------------------
-mafGUIPicButtons::mafGUIPicButtons(wxWindow* parent,wxWindowID id, mafString filename, int numberOfColumns)
-	:mafGUIPanel(parent,id,wxDefaultPosition,wxDefaultSize,mafGUIPicButtonsStyle)       
-//----------------------------------------------------------------------------
-{
-	m_Sizer = NULL;
-	m_Listener = NULL;
-
-	// calculate from file
-	LoadFile(filename);
-	m_NumberOfButtons = m_Pictures.size(); 
-	m_NumberOfColumns = numberOfColumns;
-	m_ActiveButtonId = -1;
-	m_ButtonsType = ID_RADIO_BUTTON;
-}
-//----------------------------------------------------------------------------
 void mafGUIPicButtons::LoadFile(mafString filename)   
 //----------------------------------------------------------------------------
 {
 	m_NumberOfButtons = 0;
 	m_Pictures.clear();
+	m_Pictures.resize(0);
 	m_ButtonsInfo.clear();
 
 	// load file from here
@@ -121,32 +107,65 @@ mafGUIPicButtons::~mafGUIPicButtons()
 {
   
 }
+
 //----------------------------------------------------------------------------
-void mafGUIPicButtons::Create()
+int mafGUIPicButtons::GetNumberOfRows()
 //----------------------------------------------------------------------------
 {
-  assert(m_Pictures.size() != 0);
-  int rows = m_NumberOfButtons / m_NumberOfColumns;
+	return m_NumberOfButtons / m_NumberOfColumns;
+}
 
-  assert(m_NumberOfButtons != 0 && rows != 0);
+//----------------------------------------------------------------------------
+int mafGUIPicButtons::GetNumberOfColumns()
+//----------------------------------------------------------------------------
+{
+	return m_NumberOfColumns;
+}
+//----------------------------------------------------------------------------
+void mafGUIPicButtons::Create(wxString filename)
+//----------------------------------------------------------------------------
+{
+	// calculate from file
+	if(filename.IsEmpty() == false) {
+		m_Pictures.clear();
+		m_Pictures.resize(0);
 
-  m_Sizer =  new wxFlexGridSizer( rows, m_NumberOfColumns, 2, 2 );
+		for(int i=0; i<m_PicButtons.size();++i){
+			delete m_PicButtons.at(i);
+		}
 
-  for(int i=0; i<m_NumberOfButtons;i++)
-  {
-    m_PicButtons.push_back(new mafGUIPicButton(this, m_Pictures[m_PicButtons.size()].c_str(), FIRST_BUTTON_ID + m_PicButtons.size(), this,7));
-	m_CheckList.push_back(false);
-  }
+		m_PicButtons.clear();
+		m_PicButtons.resize(0);
+		m_CheckList.clear();
+		m_CheckList.resize(0);
+		LoadFile(filename);
+		m_NumberOfButtons = m_Pictures.size(); 
+	}
+	assert(m_Pictures.size() != 0);
+	int rows = m_NumberOfButtons / m_NumberOfColumns;
 
-  for(int i = 0; i < m_PicButtons.size(); i++)
-  {
-    m_Sizer->Add(m_PicButtons[i],0,0);
-  }
+	assert(m_NumberOfButtons != 0 && rows != 0);
+	if(m_Sizer == NULL) {
+		m_Sizer =  new wxFlexGridSizer( rows, m_NumberOfColumns, 2, 2 );
+	}
 
-  this->SetAutoLayout( TRUE );
-  this->SetSizer( m_Sizer );
-  m_Sizer->Fit(this);
-  m_Sizer->SetSizeHints(this);
+	m_Sizer->Clear(); //check if are destroyed
+  
+	for(int i=0; i<m_NumberOfButtons;i++)
+	{
+		m_PicButtons.push_back(new mafGUIPicButton(this, m_Pictures[m_PicButtons.size()].c_str(), FIRST_BUTTON_ID + m_PicButtons.size(), this,7));
+		m_CheckList.push_back(false);
+	}
+
+	for(int i = 0; i < m_PicButtons.size(); i++)
+	{
+		m_Sizer->Add(m_PicButtons[i],0,0);
+	}
+
+	this->SetAutoLayout( TRUE );
+	this->SetSizer( m_Sizer );
+	m_Sizer->Fit(this);
+	m_Sizer->SetSizeHints(this);
 }
 //----------------------------------------------------------------------------
 void mafGUIPicButtons::OnEvent(mafEventBase *maf_event)

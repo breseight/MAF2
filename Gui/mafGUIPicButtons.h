@@ -41,7 +41,6 @@ class MAF_EXPORT mafGUIPicButtons: public mafGUIPanel , public mafObserver
 {
 public:
   mafGUIPicButtons(wxWindow* parent,wxWindowID id = -1, int numberOfButtons = 1, int numberOfColumns = 1);
-  mafGUIPicButtons(wxWindow* parent,wxWindowID id = -1, mafString filename = "", int numberOfColumns = 1);
   virtual ~mafGUIPicButtons();
 
   enum ID_BUTTON_TYPE {
@@ -52,9 +51,12 @@ public:
 
   void SetListener(mafObserver *Listener) {m_Listener = Listener;};
 
+  int GetNumberOfRows();
+  int GetNumberOfColumns();
+
   void OnEvent(mafEventBase *maf_event);
   void SetPictureVector(std::vector<wxString> &pictures);
-  void Create();
+  void Create(wxString filename = "");
   void ActivateButton(int index, bool activated);
   void DeActivateAllButtons();
   void EnableButton(int index, bool activated);
