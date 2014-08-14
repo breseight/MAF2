@@ -128,7 +128,7 @@ public:
 	void SetRulerLegend(const mafString &ruler_legend);
 
 	/** Set Orientator Text Properties */
-	void SetOrientatorProperties(double rgbText[3], double rgbBackground[3], double scale = 1);
+	void SetOrientatorProperties(double rgbText[3], double rgbBackground[3], double scale = 1, double *angleLeft=NULL, double *angleDown=NULL, double *angleRight=NULL, double *angleUp=NULL);
 
 	/** Set Profiling Information Text Visibility*/
 	void SetProfilingActorVisibility(bool show);

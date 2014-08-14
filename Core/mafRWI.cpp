@@ -223,7 +223,7 @@ void mafRWI::CreateRenderingScene(wxWindow *parent, RWI_LAYERS layers, bool use_
   m_RwiBase->SetRenderWindow(m_RenderWindow);
   m_RwiBase->Initialize();
 
-  assert(m_AlwaysVisibleRenderer->Transparent()	== true);
+  assert(m_AlwaysVisibleRenderer->Transparent()	== TRUE);
 
 	m_ShowRuler = show_ruler;
 	m_ShowOrientator = show_orientator;
@@ -1209,12 +1209,28 @@ void mafRWI::UpdateRulerUnit()
 	CameraUpdate();
 }
 //----------------------------------------------------------------------------
-void mafRWI::SetOrientatorProperties(double rgbText[3], double rgbBackground[3], double scale)
+void mafRWI::SetOrientatorProperties(double rgbText[3], double rgbBackground[3], double scale, double *angleLeft, double *angleDown, double *angleRight, double *angleUp)
 //----------------------------------------------------------------------------
 {
 	if(m_Orientator)
 	{
-		m_Orientator->SetScale(scale);
+		double aL[3]={0.,0.,0.,};
+		double aD[3]={0.,0.,0.,};
+		double aR[3]={0.,0.,0.,};
+		double aU[3]={0.,0.,0.,};
+		if(angleLeft) {
+			aL[0] = *(angleLeft);aL[1] = *(angleLeft+1);aL[2] = *(angleLeft+2);
+		}
+		if(angleDown) {
+			aD[0] = *(angleDown);aD[1] = *(angleDown+1);aD[2] = *(angleDown+2);
+		}
+		if(angleRight) {
+			aR[0] = *(angleRight);aR[1] = *(angleRight+1);aR[2] = *(angleRight+2);
+		}
+		if(angleUp) {
+			aU[0] = *(angleUp);aU[1] = *(angleUp+1);aU[2] = *(angleUp+2);
+		}
+		m_Orientator->SetTransform(scale, aL, aD, aR, aU);
 		m_Orientator->SetTextColor(rgbText[0], rgbText[1],rgbText[2]);
 		m_Orientator->SetBackgroundColor(rgbBackground[0], rgbBackground[1],rgbBackground[2]);
 	}

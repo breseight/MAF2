@@ -84,13 +84,13 @@ class VTK_vtkMAF_EXPORT vtkMAFTextOrientator : public vtkActor2D
   const char*   GetTextUp(){return TextSourceUp->GetText();}
 
   /** set text left */
-  void 	  SetTextLeft(const char * inputString){TextSourceLeft->SetText(inputString);}
+  void 	  SetTextLeft(const char * inputString);
   /** set text down */
-  void 	  SetTextDown(const char * inputString){TextSourceDown->SetText(inputString);} 
+  void 	  SetTextDown(const char * inputString);
   /** set text right */
-  void 	  SetTextRight(const char * inputString){TextSourceRight->SetText(inputString);}
+  void 	  SetTextRight(const char * inputString);
   /** set text up */
-  void 	  SetTextUp(const char * inputString){TextSourceUp->SetText(inputString);}
+  void 	  SetTextUp(const char * inputString);
   
   /** Set Visibility for actor*/
   void SetSingleActorVisibility(int actor, bool show);
@@ -105,7 +105,7 @@ class VTK_vtkMAF_EXPORT vtkMAFTextOrientator : public vtkActor2D
   void SetBackgroundColor(double red, double green, double blue);
 
   /** Set scale actor*/
-  void SetScale(double multiple);
+  void SetTransform(double multiple, double angleLeft[3], double angleDown[3], double angleRight[3], double angleUp[3]);
 
   /** Flag for attaching the orientator in specific position*/
   void SetAttachPositionFlag(bool enable){AttachPositionFlag = enable;};
@@ -135,6 +135,9 @@ protected:
   int	 RenderOpaqueGeometry(vtkViewport *viewport);      
   /** Draw the object to the screen */
   int	 RenderTranslucentGeometry(vtkViewport *viewport)  {return 0;}
+
+  // compute coordinates
+  void ComputeWorldToDisplay(vtkRenderer *ren, double x, double y, double z, double displayPt[3]);
 
   //variables
   int                     Dimension;

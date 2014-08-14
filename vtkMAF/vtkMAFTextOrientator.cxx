@@ -29,6 +29,7 @@
 #include "vtkTransform.h"
 #include "vtkTransformPolyDataFilter.h"
 #include "vtkPolyData.h"
+#include "vtkInteractorObserver.h"
 
 
 vtkCxxRevisionMacro(vtkMAFTextOrientator, "$Revision: 1.3.2.2 $");
@@ -136,6 +137,7 @@ int vtkMAFTextOrientator::RenderOpaqueGeometry(vtkViewport *viewport)
    
 	return 0;
 }
+
 //------------------------------------------------------------------------------
 void vtkMAFTextOrientator::OrientatorCreate()
 //------------------------------------------------------------------------------
@@ -196,6 +198,130 @@ void vtkMAFTextOrientator::OrientatorCreate()
   TextSourceUpActor = vtkActor2D::New();
   TextSourceUpActor->SetMapper(TextSourceUpMapper);
 }
+
+//----------------------------------------------------------------------------
+void vtkMAFTextOrientator::SetTextLeft(const char * inputString)
+//----------------------------------------------------------------------------
+{
+	TextSourceLeft->Delete();
+	TextSourceLeft = NULL;
+	TextSourceLeft = vtkTextSource::New();
+	TextSourceLeftMapper->SetInput(TextSourceLeft->GetOutput());
+	TextSourceLeft->SetText(inputString);
+	TextSourceLeft->Update();
+
+	//alignment
+	double b[6];
+	TextSourceLeft->GetOutput()->GetBounds(b);
+	vtkTransform *transformLeft = vtkTransform::New();
+	transformLeft->Translate(.5*(b[0]-b[1]),.5*(b[2]-b[3]),.5*(b[4]-b[5]));
+	transformLeft->Update();
+	vtkTransformPolyDataFilter *tpdfLeft = vtkTransformPolyDataFilter::New();
+	tpdfLeft->SetTransform(transformLeft);
+	tpdfLeft->SetInput(TextSourceLeft->GetOutput());
+	tpdfLeft->Update();
+
+	TextSourceLeft->GetOutput()->DeepCopy(tpdfLeft->GetOutput());
+	TextSourceLeft->GetOutput()->Update();
+
+	tpdfLeft->Delete();
+	transformLeft->Delete();
+}
+//----------------------------------------------------------------------------
+void vtkMAFTextOrientator::SetTextDown(const char * inputString)
+//----------------------------------------------------------------------------
+{
+	TextSourceDown->Delete();
+	TextSourceDown = NULL;
+	TextSourceDown = vtkTextSource::New();
+	TextSourceDownMapper->SetInput(TextSourceDown->GetOutput());
+	TextSourceDown->SetText(inputString);
+	TextSourceDown->Update();
+	//alignment
+	double b[6];
+	TextSourceDown->GetOutput()->GetBounds(b);
+	vtkTransform *transformDown = vtkTransform::New();
+	transformDown->Translate(.5*(b[0]-b[1]),.5*(b[2]-b[3]),.5*(b[4]-b[5]));
+	transformDown->Update();
+	vtkTransformPolyDataFilter *tpdfDown = vtkTransformPolyDataFilter::New();
+	tpdfDown->SetTransform(transformDown);
+	tpdfDown->SetInput(TextSourceDown->GetOutput());
+	tpdfDown->Update();
+
+	TextSourceDown->GetOutput()->DeepCopy(tpdfDown->GetOutput());
+	TextSourceDown->GetOutput()->Update();
+
+	tpdfDown->Delete();
+	transformDown->Delete();
+} 
+//----------------------------------------------------------------------------
+void vtkMAFTextOrientator::SetTextRight(const char * inputString)
+//----------------------------------------------------------------------------
+{
+	TextSourceRight->Delete();
+	TextSourceRight = NULL;
+	TextSourceRight = vtkTextSource::New();
+	TextSourceRightMapper->SetInput(TextSourceRight->GetOutput());
+	TextSourceRight->SetText(inputString);
+	TextSourceRight->Update();
+	//alignment
+	double b[6];
+	TextSourceRight->GetOutput()->GetBounds(b);
+	vtkTransform *transformRight = vtkTransform::New();
+	transformRight->Translate(.5*(b[0]-b[1]),.5*(b[2]-b[3]),.5*(b[4]-b[5]));
+	transformRight->Update();
+	vtkTransformPolyDataFilter *tpdfRight = vtkTransformPolyDataFilter::New();
+	tpdfRight->SetTransform(transformRight);
+	tpdfRight->SetInput(TextSourceRight->GetOutput());
+	tpdfRight->Update();
+
+	TextSourceRight->GetOutput()->DeepCopy(tpdfRight->GetOutput());
+	TextSourceRight->GetOutput()->Update();
+
+	tpdfRight->Delete();
+	transformRight->Delete();
+}
+
+//----------------------------------------------------------------------------
+void vtkMAFTextOrientator::SetTextUp(const char * inputString)
+//----------------------------------------------------------------------------
+{
+	TextSourceUp->Delete();
+	TextSourceUp = NULL;
+	TextSourceUp = vtkTextSource::New();
+	TextSourceUpMapper->SetInput(TextSourceUp->GetOutput());
+	TextSourceUp->SetText(inputString);
+	TextSourceUp->Update();
+	//alignment
+	double b[6];
+	TextSourceUp->GetOutput()->GetBounds(b);
+	vtkTransform *transformUp = vtkTransform::New();
+	transformUp->Translate(.5*(b[0]-b[1]),.5*(b[2]-b[3]),.5*(b[4]-b[5]));
+	transformUp->Update();
+	vtkTransformPolyDataFilter *tpdfUp = vtkTransformPolyDataFilter::New();
+	tpdfUp->SetTransform(transformUp);
+	tpdfUp->SetInput(TextSourceUp->GetOutput());
+	tpdfUp->Update();
+
+	TextSourceUp->GetOutput()->DeepCopy(tpdfUp->GetOutput());
+	TextSourceUp->GetOutput()->Update();
+
+	tpdfUp->Delete();
+	transformUp->Delete();
+}
+
+//----------------------------------------------------------------------------
+void vtkMAFTextOrientator::ComputeWorldToDisplay(vtkRenderer *ren, double x, double y, double z, double displayPt[3])
+//----------------------------------------------------------------------------
+{
+	if ( !ren ) 
+		return;
+
+	ren->SetWorldPoint(x, y, z, 1.0);
+	ren->WorldToDisplay();
+	ren->GetDisplayPoint(displayPt);
+}
+
 //----------------------------------------------------------------------------
 void vtkMAFTextOrientator::OrientatorUpdate(vtkRenderer *ren)
 //----------------------------------------------------------------------------
@@ -205,24 +331,36 @@ void vtkMAFTextOrientator::OrientatorUpdate(vtkRenderer *ren)
   
   int middleX = renderSize[0]/2;
   int middleY = renderSize[1]/2;
+
+  
   
   if(AttachPositionFlag == false)
   {
     //left
+	double displayPt[3];	
+	//double displayPt0[3] = {0,0,0};
+	//ComputeWorldToDisplay (ren, 0., 0., 0., displayPt0);
+
+	//ComputeWorldToDisplay (ren, TextSourceLeftActor->GetWidth(), 0., 0., displayPt);
+	
     TextSourceLeftActor->GetPositionCoordinate()->SetCoordinateSystemToDisplay();
-    TextSourceLeftActor->SetPosition(Dimension/4 + DisplayOffsetLeft[0], middleY-Dimension/2 + DisplayOffsetLeft[1]);
+    TextSourceLeftActor->SetPosition(1.5*Dimension, middleY);
+	
 
     //down
+	//ComputeWorldToDisplay (ren, 0., TextSourceDownActor->GetHeight(), 0., displayPt);
     TextSourceDownActor->GetPositionCoordinate()->SetCoordinateSystemToDisplay();
-    TextSourceDownActor->SetPosition(middleX - Dimension/4 + DisplayOffsetDown[0], Dimension/4 + DisplayOffsetDown[1]);
+    TextSourceDownActor->SetPosition(middleX,  1.5*Dimension);
 
     //right
+	//ComputeWorldToDisplay (ren, TextSourceRightActor->GetWidth(), 0., 0., displayPt);
     TextSourceRightActor->GetPositionCoordinate()->SetCoordinateSystemToDisplay();
-    TextSourceRightActor->SetPosition(renderSize[0] - 1.5*Dimension + DisplayOffsetRight[0] , middleY-Dimension/2 + DisplayOffsetRight[1]);
+    TextSourceRightActor->SetPosition(renderSize[0] - 1.5*Dimension, middleY);
 
     //up
+	//ComputeWorldToDisplay (ren, 0., TextSourceUpActor->GetHeight(), 0., displayPt);
     TextSourceUpActor->GetPositionCoordinate()->SetCoordinateSystemToDisplay();
-    TextSourceUpActor->SetPosition(middleX - Dimension/4 + DisplayOffsetUp[0], renderSize[1]-2*Dimension + DisplayOffsetUp[1]);
+    TextSourceUpActor->SetPosition(middleX, renderSize[1] - 1.5*Dimension);
   }
   else
   {
@@ -355,43 +493,77 @@ void vtkMAFTextOrientator::SetBackgroundColor(double red, double green, double b
   TextSourceUp->Update();
 }
 //----------------------------------------------------------------------------
-void vtkMAFTextOrientator::SetScale(double multiple)
+void vtkMAFTextOrientator::SetTransform(double multiple, double angleLeft[3], double angleDown[3], double angleRight[3], double angleUp[3])
 //----------------------------------------------------------------------------
 {
   Dimension *= multiple;
-  vtkTransform *transform = vtkTransform::New();
-  transform->Scale(multiple,multiple,multiple);
-  transform->Update();
 
-  vtkTransformPolyDataFilter *tpdf = vtkTransformPolyDataFilter::New();
-  tpdf->SetTransform(transform);
   //left
-  tpdf->SetInput(TextSourceLeft->GetOutput());
-  tpdf->Update();
-  
-  TextSourceLeft->GetOutput()->DeepCopy(tpdf->GetOutput());
+  vtkTransform *transformLeft = vtkTransform::New();
+  transformLeft->Scale(multiple,multiple,multiple);
+  transformLeft->RotateX(angleLeft[0]);
+  transformLeft->RotateY(angleLeft[1]);
+  transformLeft->RotateZ(angleLeft[2]);
+  transformLeft->Update();
+
+  vtkTransformPolyDataFilter *tpdfLeft = vtkTransformPolyDataFilter::New();
+  tpdfLeft->SetTransform(transformLeft);
+  tpdfLeft->SetInput(TextSourceLeft->GetOutput());
+  tpdfLeft->Update();
+  TextSourceLeft->GetOutput()->DeepCopy(tpdfLeft->GetOutput());
   TextSourceLeft->GetOutput()->Update();
+  tpdfLeft->Delete();
+  transformLeft->Delete();
+
   //down
-  tpdf->SetInput(TextSourceDown->GetOutput());
-  tpdf->Update();
-  
-  TextSourceDown->GetOutput()->DeepCopy(tpdf->GetOutput());
+  vtkTransform *transformDown = vtkTransform::New();
+  transformDown->Scale(multiple,multiple,multiple);
+  transformDown->RotateX(angleDown[0]);
+  transformDown->RotateY(angleDown[1]);
+  transformDown->RotateZ(angleDown[2]);
+  transformDown->Update();
+  vtkTransformPolyDataFilter *tpdfDown = vtkTransformPolyDataFilter::New();
+  tpdfDown->SetTransform(transformDown);
+  tpdfDown->SetInput(TextSourceDown->GetOutput());
+  tpdfDown->Update();
+  TextSourceDown->GetOutput()->DeepCopy(tpdfDown->GetOutput());
   TextSourceDown->GetOutput()->Update();
+  tpdfDown->Delete();
+  transformDown->Delete();
+  
+
   //right
-  tpdf->SetInput(TextSourceRight->GetOutput());
-  tpdf->Update();
-
-  TextSourceRight->GetOutput()->DeepCopy(tpdf->GetOutput());
+  vtkTransform *transformRight = vtkTransform::New();
+  transformRight->Scale(multiple,multiple,multiple);
+  transformRight->RotateX(angleRight[0]);
+  transformRight->RotateY(angleRight[1]);
+  transformRight->RotateZ(angleRight[2]);
+  transformRight->Update();
+  vtkTransformPolyDataFilter *tpdfRight = vtkTransformPolyDataFilter::New();
+  tpdfRight->SetTransform(transformRight);
+  tpdfRight->SetInput(TextSourceRight->GetOutput());
+  tpdfRight->Update();
+  TextSourceRight->GetOutput()->DeepCopy(tpdfRight->GetOutput());
   TextSourceRight->GetOutput()->Update();
+  tpdfRight->Delete();
+  transformRight->Delete();
+
+
   //up
-  tpdf->SetInput(TextSourceUp->GetOutput());
-  tpdf->Update();
-
-  TextSourceUp->GetOutput()->DeepCopy(tpdf->GetOutput());
+  vtkTransform *transformUp = vtkTransform::New();
+  transformUp->Scale(multiple,multiple,multiple);
+  transformUp->RotateX(angleUp[0]);
+  transformUp->RotateY(angleUp[1]);
+  transformUp->RotateZ(angleUp[2]);
+  transformUp->Update();
+  vtkTransformPolyDataFilter *tpdfUp = vtkTransformPolyDataFilter::New();
+  tpdfUp->SetTransform(transformUp);
+  tpdfUp->SetInput(TextSourceUp->GetOutput());
+  tpdfUp->Update();
+  TextSourceUp->GetOutput()->DeepCopy(tpdfUp->GetOutput());
   TextSourceUp->GetOutput()->Update();
-
-  tpdf->Delete();
-  transform->Delete();
+  tpdfUp->Delete();
+  transformUp->Delete();
 }
 //----------------------------------------------------------------------------
 void vtkMAFTextOrientator::SetSingleActorVisibility(int actor, bool show)
