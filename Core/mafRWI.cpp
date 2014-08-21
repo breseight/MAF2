@@ -332,7 +332,7 @@ mafRWI::~mafRWI()
 	vtkDEL(m_RwiBase);  //The renderer has to be Deleted as last
 }
 //-----------------------------------------------------------------------------------------
-void mafRWI::CameraSet(int cam_position, double zoom, double elevation, double azimuth)
+void mafRWI::CameraSet(int cam_position, double zoom, double elevation, double azimuth, bool avoidResetAll)
 //-----------------------------------------------------------------------------------------
 {
 	int x,y,z,vx,vy,vz;
@@ -455,6 +455,9 @@ void mafRWI::CameraSet(int cam_position, double zoom, double elevation, double a
 	m_Camera->Azimuth(azimuth);
 	m_Camera->SetClippingRange(0.1,1000);
 
+	if(avoidResetAll == true) {
+		return;
+	}
 	CameraReset((mafNode*)NULL, zoom);
 }
 

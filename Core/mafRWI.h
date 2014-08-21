@@ -75,7 +75,7 @@ public:
 	void CameraUpdate();
 
 	/** Set the camera position. */
-	void CameraSet(int cam_position, double zoom = 1, double elevation = 0., double azimuth = 0.);
+	void CameraSet(int cam_position, double zoom = 1, double elevation = 0., double azimuth = 0., bool avoidResetAll = false);
 
 
 	/** Set the camera position, set custom pos , custom viewUp , zoom and if projection is parallel */
