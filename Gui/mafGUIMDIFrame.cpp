@@ -30,6 +30,7 @@
 #include "mafEvent.h"
 #include "mafPics.h"
 #include "mafGUIDockSettings.h"
+#include "vtkTimerLog.h"
 
 #ifdef __WIN32__
 #include <malloc.h>
@@ -46,7 +47,7 @@ class mafGUIMDIFrameCallback : public vtkCommand
 {
   public:
     vtkTypeMacro(mafGUIMDIFrameCallback,vtkCommand);
-
+	
     static mafGUIMDIFrameCallback *New() {return new mafGUIMDIFrameCallback;}
     mafGUIMDIFrameCallback() {m_mode=0; m_Frame=NULL;};
     void SetMode(int mode){m_mode=mode;};
@@ -335,6 +336,7 @@ void mafGUIMDIFrame::OnIdle(wxIdleEvent& event)
     }
   }
 #endif
+   //mafEventMacro(mafEvent(this, ID_PROTECTION_CHECK));
 }
 //----------------------------------------------------------------------------
 void mafGUIMDIFrame::FreeMemorySizeOnIdle(wxIdleEvent& event)
@@ -474,12 +476,14 @@ void mafGUIMDIFrame::ProgressBarSetText(wxString *msg)
 void mafGUIMDIFrame::RenderStart()
 //-----------------------------------------------------------
 {
-  SetStatusText( "Rendering",1);
+  //SetStatusText( "Rendering",1);
+  //m_LastRenderTime=vtkTimerLog::GetCurrentTime();
 }
 //-----------------------------------------------------------
 void mafGUIMDIFrame::RenderEnd()
 //-----------------------------------------------------------
 {
+  //SetStatusText( wxString::Format("%.2f",vtkTimerLog::GetCurrentTime() - m_LastRenderTime),1);
   SetStatusText( " ",1);
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

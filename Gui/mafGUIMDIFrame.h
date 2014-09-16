@@ -174,6 +174,7 @@ protected:
   wxGauge      *m_Gauge;
   std::vector<int>    m_PBCalls;
   int  m_ID_PBCall;
+  double m_LastRenderTime;
 
   int  m_MemoryLimitAlert; ///< Used to alert the user when memory decrease under this limit value.
   bool m_UserAlerted;

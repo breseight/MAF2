@@ -385,6 +385,8 @@ AVATAR_REMOVED,   ///< used to advise the InteractionManager an avatar has been 
 
 MATRIX_UPDATED, ///< issue by a matrix pipe to advise consumers of output matrix updating
 
+ID_PROTECTION_CHECK,
+
 // const used by mafGUI and mafGUIValidator
 MINID,      
 MAXID = MINID + MAXWIDGET,
