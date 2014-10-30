@@ -408,15 +408,17 @@ void mafGUI::Button  (int id,mafString *label,mafString button_text, mafString t
 	Add(sizer,0,wxALL, M); 
 }
 //----------------------------------------------------------------------------
-mafGUICrossIncremental *mafGUI::CrossIncremental(int id,const char* label, double *stepVariable, double *topBottomVariable, double *leftRightVariable, int modality ,wxString tooltip /* ="" */, bool boldLabel /* = true */, bool comboStep /* = false */, int digits /* = -1 */, mafString *buttonUpDown_text /* = NULL */, mafString *buttonLeftRight_text /* = NULL */)
+mafGUICrossIncremental *mafGUI::CrossIncremental(int id,const char* label, double *stepVariable, double *topBottomVariable, double *leftRightVariable, int modality ,wxString tooltip /* ="" */, bool boldLabel /* = true */, bool comboStep /* = false */, int digits /* = -1 */, mafString *buttonUpDown_text /* = NULL */, mafString *buttonLeftRight_text /* = NULL */, wxColour foregroundColour, wxColour backgroundColour)
 //----------------------------------------------------------------------------
 {
   int width = (label == "") ? FW : DW;
   
   mafGUICrossIncremental *cI =  new mafGUICrossIncremental(this, GetWidgetId(id), label, stepVariable, topBottomVariable, leftRightVariable, boldLabel, modality, dp, wxDefaultSize, MINFLOAT, MAXFLOAT, digits,wxTAB_TRAVERSAL|wxCLIP_CHILDREN, comboStep,buttonUpDown_text,buttonLeftRight_text);
+  cI->SetForegroundColour(foregroundColour);
+  cI->SetBackgroundColour(backgroundColour);
   cI->SetListener(this);
   
-	Add(cI,0,wxALL, M); 
+  Add(cI,0,wxALL, M); 
   
   return cI;
 }
@@ -822,7 +824,7 @@ void mafGUI::Float(int id,mafString label,float* var,float min, float max, int f
 	}
 }
 //----------------------------------------------------------------------------
-void mafGUI::Double(int id,mafString label,double* var,double min, double max, int decimal_digit, mafString tooltip, bool labelAlwaysEnable)
+void mafGUI::Double(int id,mafString label,double* var,double min, double max, int decimal_digit, mafString tooltip, bool labelAlwaysEnable, wxColour foreGroundColour, wxColour backGroundColour)
 //----------------------------------------------------------------------------
 {
   int w_id;
@@ -831,7 +833,9 @@ void mafGUI::Double(int id,mafString label,double* var,double min, double max, i
     w_id = GetWidgetId(id);
 		wxTextCtrl  *text = new wxTextCtrl  (this, w_id, "", dp, wxSize(FW,LH), m_EntryStyle  );
 		text->SetValidator( mafGUIValidator(this,w_id,text,var,min,max,decimal_digit) );
-    text->SetFont(m_Font);
+		text->SetBackgroundColour(backGroundColour);
+		text->SetForegroundColour(foreGroundColour);
+        text->SetFont(m_Font);
 		if(!tooltip.IsEmpty()) 
       text->SetToolTip(tooltip.GetCStr());
 	  Add(text,0,wxALL, M);
@@ -844,6 +848,8 @@ void mafGUI::Double(int id,mafString label,double* var,double min, double max, i
     lab->SetFont(m_Font);
     w_id = GetWidgetId(id);
 		wxTextCtrl  *text = new wxTextCtrl  (this, w_id, ""   , dp, wxSize(DW,LH), m_EntryStyle  );
+		text->SetBackgroundColour(backGroundColour);
+		text->SetForegroundColour(foreGroundColour);
 		text->SetValidator( mafGUIValidator(this,w_id,text,var,min,max,decimal_digit) );
     text->SetFont(m_Font);
 		if(!tooltip.IsEmpty())

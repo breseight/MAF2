@@ -120,6 +120,8 @@ public:
   mafGUIComboBox *GetComboBox(){return m_StepComboBox;}
 
   void SetComboValue(int index);
+  void SetForegroundColour(wxColour foregroundColour){m_StepText->SetForegroundColour(foregroundColour);}
+  void SetBackgroundColour(wxColour backgroundColour){m_StepText->SetBackgroundColour(backgroundColour);};
 
 private:
   void CreateWidgetTopBottom(mafString *button_text);

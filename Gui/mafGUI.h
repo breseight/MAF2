@@ -155,7 +155,7 @@ public:
   void Float(int id,mafString label,float *var, float min = MINFLOAT, float max = MAXFLOAT, int flag=0, int decimal_digit = -1, mafString tooltip = "");
 
   /** Double entry widget. */
-  void Double(int id,mafString label,double *var, double	min = MINDOUBLE, double max = MAXDOUBLE, int decimal_digit = -1, mafString tooltip = "", bool labelAlwaysEnable = false);
+  void Double(int id,mafString label,double *var, double	min = MINDOUBLE, double max = MAXDOUBLE, int decimal_digit = -1, mafString tooltip = "", bool labelAlwaysEnable = false, wxColour foreGround=*wxBLACK, wxColour backGroundColour=*wxWHITE);
 
   /** Integer vector3 entry widget. */
   void Vector(int id,wxString label, int var[3], int min = MININT, int max = MAXINT, wxString tooltip = "", wxColour *bg_colour = NULL);
@@ -217,7 +217,7 @@ public:
   void Button(int id,mafString *label,mafString button_text, mafString tooltip=""); 
 
 	/** Widget with 4 buttons and a text array disposed like a cross.*/
-  mafGUICrossIncremental *CrossIncremental(int id,const char* label, double *stepVariable, double *topBottomVariable, double *leftRightVariable, int modality ,wxString tooltip ="", bool boldLabel = true, bool comboStep = false, int digits = -1, mafString *buttonUpDown_text = NULL, mafString *buttonLeftRight_text = NULL);
+  mafGUICrossIncremental *CrossIncremental(int id,const char* label, double *stepVariable, double *topBottomVariable, double *leftRightVariable, int modality ,wxString tooltip ="", bool boldLabel = true, bool comboStep = false, int digits = -1, mafString *buttonUpDown_text = NULL, mafString *buttonLeftRight_text = NULL, wxColour foreground=*wxBLACK, wxColour backgroundColour=*wxWHITE);
 
   /** two generic Buttons widget. */
   void TwoButtons(int firstID, int secondID, const char* label1, const char* label2, int alignment = wxALL, int width = -1);
