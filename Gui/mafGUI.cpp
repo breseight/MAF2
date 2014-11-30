@@ -353,13 +353,14 @@ void mafGUI::Label(mafString label1,mafString *var, bool bold_label, bool bold_v
 	Add(sizer,0,wxALL, M); 
 }
 //----------------------------------------------------------------------------
-void mafGUI::Button(int id,mafString button_text,mafString label, mafString tooltip) 
+mafGUIButton *mafGUI::Button(int id,mafString button_text,mafString label, mafString tooltip) 
 //----------------------------------------------------------------------------
 {
+	mafGUIButton *butt;
 	if(label.IsEmpty())
 	{
     int w_id = GetWidgetId(id);
-		mafGUIButton *butt = new mafGUIButton(this, w_id, button_text.GetCStr(),dp, wxSize(FW,BH) );
+		butt = new mafGUIButton(this, w_id, button_text.GetCStr(),dp, wxSize(FW,BH) );
 		butt->SetValidator( mafGUIValidator(this,w_id, butt) );
     butt->SetFont(m_Font);
     if(!tooltip.IsEmpty()) 
@@ -373,7 +374,7 @@ void mafGUI::Button(int id,mafString button_text,mafString label, mafString tool
       lab->SetBackgroundColour(m_BackgroundColor);
     lab->SetFont(m_Font);
     int w_id = GetWidgetId(id);
-		mafGUIButton    *butt = new mafGUIButton   (this, w_id, button_text.GetCStr(),dp, wxSize(EW, BH) );
+		butt = new mafGUIButton   (this, w_id, button_text.GetCStr(),dp, wxSize(EW, BH) );
 		butt->SetValidator( mafGUIValidator(this,w_id,butt) );
     butt->SetFont(m_Font);
 		if(!tooltip.IsEmpty()) 
@@ -384,9 +385,10 @@ void mafGUI::Button(int id,mafString button_text,mafString label, mafString tool
 		sizer->Add( butt,0);
 		Add(sizer,0,wxALL, M); 
 	}
+	return butt;
 }
 //----------------------------------------------------------------------------
-void mafGUI::Button  (int id,mafString *label,mafString button_text, mafString tooltip)
+mafGUIButton *mafGUI::Button  (int id,mafString *label,mafString button_text, mafString tooltip)
 //----------------------------------------------------------------------------
 {
   int w_id = GetWidgetId(id);
@@ -406,6 +408,8 @@ void mafGUI::Button  (int id,mafString *label,mafString button_text, mafString t
 	sizer->Add( lab, 0, wxALIGN_CENTRE|wxRIGHT, LM);
 	sizer->Add( butt,0);
 	Add(sizer,0,wxALL, M); 
+
+	return butt;
 }
 //----------------------------------------------------------------------------
 mafGUICrossIncremental *mafGUI::CrossIncremental(int id,const char* label, double *stepVariable, double *topBottomVariable, double *leftRightVariable, int modality ,wxString tooltip /* ="" */, bool boldLabel /* = true */, bool comboStep /* = false */, int digits /* = -1 */, mafString *buttonUpDown_text /* = NULL */, mafString *buttonLeftRight_text /* = NULL */, wxColour foregroundColour, wxColour backgroundColour)

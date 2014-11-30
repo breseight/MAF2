@@ -40,6 +40,7 @@ class mafGUICheckListBox;
 class mafGUICrossIncremental;
 class mafGUILutSwatch;
 class mafGUIRollOut;
+class mafGUIButton;
 
 
 #ifdef MAF_USE_VTK //:::::::::::::::::::::::::::::::::
@@ -211,10 +212,10 @@ public:
   #endif //:::::::::::::::::::::::::::::::::
 
   /** Button widget. */
-  void Button(int id,mafString button_text,mafString label="", mafString tooltip=""); 
+  mafGUIButton *Button(int id,mafString button_text,mafString label="", mafString tooltip=""); 
   
   /** Button widget with variable label. */
-  void Button(int id,mafString *label,mafString button_text, mafString tooltip=""); 
+  mafGUIButton *Button(int id,mafString *label,mafString button_text, mafString tooltip="");
 
 	/** Widget with 4 buttons and a text array disposed like a cross.*/
   mafGUICrossIncremental *CrossIncremental(int id,const char* label, double *stepVariable, double *topBottomVariable, double *leftRightVariable, int modality ,wxString tooltip ="", bool boldLabel = true, bool comboStep = false, int digits = -1, mafString *buttonUpDown_text = NULL, mafString *buttonLeftRight_text = NULL, wxColour foreground=*wxBLACK, wxColour backgroundColour=*wxWHITE);

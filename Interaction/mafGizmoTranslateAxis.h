@@ -89,6 +89,10 @@ public:
   /** Set/Get the length of the cone*/
   void   SetConeLength(double length);
   double GetConeLength() {return m_ConeLength;};
+
+  /** Set/Get the length of the cone*/
+  void   SetConeRadius(double radius);
+  double GetConeRadius() {return m_ConeRadius;};
  
   //----------------------------------------------------------------------------
   // cylinder stuff
@@ -135,6 +139,7 @@ protected:
 
   /** Cone length*/
   double m_ConeLength;
+  double m_ConeRadius;
 
   /** Cylinder source*/
   vtkCylinderSource *m_Cylinder;

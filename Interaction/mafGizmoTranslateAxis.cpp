@@ -373,6 +373,19 @@ void  mafGizmoTranslateAxis::SetConeLength(double length)
   m_TranslateTr[CONE]->Translate(m_Cylinder->GetHeight() + length / 2, 0, 0);
   
 }
+
+//----------------------------------------------------------------------------
+void  mafGizmoTranslateAxis::SetConeRadius(double radius)
+//----------------------------------------------------------------------------
+{
+	m_ConeRadius = radius;
+	m_Cone->SetRadius(radius);
+
+	// translate the cone in (cylLen + conLen/2)
+	m_Cylinder->SetRadius(radius/2.);
+}
+
+
 //----------------------------------------------------------------------------
 void mafGizmoTranslateAxis::SetCylinderLength(double length)
 //----------------------------------------------------------------------------

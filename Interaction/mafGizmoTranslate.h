@@ -141,6 +141,10 @@ public:
   void SetStep(int axis, double step);
   int GetStep(int axis);
 
+  /** Modify radius of circles*/
+  void SetArrowLength(double length);
+  double GetArrowLength();
+
 protected:
 
   mafGUIGizmoTranslate *m_GuiGizmoTranslate;
@@ -189,6 +193,8 @@ protected:
 
   /** register step on axes */
   int m_Step[3];
+
+  double m_ArrowLength;
 
 };
 #endif

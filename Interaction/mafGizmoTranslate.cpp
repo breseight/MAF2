@@ -62,6 +62,7 @@ mafGizmoTranslate::mafGizmoTranslate(mafVME* input, mafObserver *listener, bool 
   m_Step[Y] = 1;
   m_Step[Z] = 1;
 
+  m_ArrowLength = -1;
 
   //no gizmo component is active at construction
   this->m_ActiveGizmoComponent = -1;
@@ -555,4 +556,26 @@ void mafGizmoTranslate::SetRenderWindowHeightPercentage(double percentage)
 		m_GTAxis[i]->SetRenderWindowHeightPercentage(percentage);
 		m_GTPlane[i]->SetRenderWindowHeightPercentage(percentage);
 	}
+}
+
+//----------------------------------------------------------------------------
+void mafGizmoTranslate::SetArrowLength(double length)
+//----------------------------------------------------------------------------
+{
+	short arrowNumber;
+	for(arrowNumber = 0; arrowNumber < 3; arrowNumber++)
+	{
+		if(m_GTAxis[arrowNumber]) m_GTAxis[arrowNumber]->SetConeLength(length/2);
+		if(m_GTAxis[arrowNumber]) m_GTAxis[arrowNumber]->SetCylinderLength(length);
+		if(m_GTAxis[arrowNumber]) m_GTAxis[arrowNumber]->SetConeRadius(length/8.);
+		if(m_GTPlane[arrowNumber]) m_GTPlane[arrowNumber]->SetSizeLength(length);
+	}
+
+	m_ArrowLength = length;
+}
+
+
+double mafGizmoTranslate::GetArrowLength()
+{
+	return m_ArrowLength;
 }
