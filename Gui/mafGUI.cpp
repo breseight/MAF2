@@ -1003,7 +1003,9 @@ mafGUIFloatSlider *mafGUI::FloatSlider(int id,wxString label,double *var,double 
       sli->SetBackgroundColour(m_BackgroundColor);
 	  text->SetValidator(mafGUIValidator(this,w_id_text,text,var,sli,min,max));
     sli->SetValidator(mafGUIValidator(this,w_id_sli,sli,var,text));
-		sizer->Add(text, 0);
+	    if(textBoxEnable) {
+		    sizer->Add(text, 0);
+		}
 		sizer->Add(sli,  0);
 	}
 	else
@@ -1026,7 +1028,9 @@ mafGUIFloatSlider *mafGUI::FloatSlider(int id,wxString label,double *var,double 
 		text->SetValidator(mafGUIValidator(this,w_id_text,text,var,sli,min,max));
     sli->SetValidator(mafGUIValidator(this,w_id_sli,sli,var,text));
 		sizer->Add(lab,  0, wxRIGHT, LM);
-		sizer->Add(text, 0);
+		if(textBoxEnable) {
+			sizer->Add(text, 0);
+		}
 		sizer->Add(sli,  0);
 	}
 	Add(sizer,0,wxALL, M); 
