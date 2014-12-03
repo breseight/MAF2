@@ -1005,6 +1005,8 @@ mafGUIFloatSlider *mafGUI::FloatSlider(int id,wxString label,double *var,double 
     sli->SetValidator(mafGUIValidator(this,w_id_sli,sli,var,text));
 	    if(textBoxEnable) {
 		    sizer->Add(text, 0);
+		} else {
+			text->Show(false);
 		}
 		sizer->Add(sli,  0);
 	}
@@ -1030,6 +1032,8 @@ mafGUIFloatSlider *mafGUI::FloatSlider(int id,wxString label,double *var,double 
 		sizer->Add(lab,  0, wxRIGHT, LM);
 		if(textBoxEnable) {
 			sizer->Add(text, 0);
+		} else {
+			text->Show(false);
 		}
 		sizer->Add(sli,  0);
 	}
