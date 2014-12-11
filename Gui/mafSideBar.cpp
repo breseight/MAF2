@@ -55,11 +55,20 @@ mafSideBar::mafSideBar(wxWindow* parent, int id, mafObserver *Listener, long sty
   m_SideSplittedPanel = new wxSplitterWindow(m_Notebook, -1, wxDefaultPosition, wxSize(-1,-1),/*wxSP_3DSASH |*/ wxSP_FULLSASH);
 
   //tree ----------------------------
+ 
   m_Tree = new mafGUICheckTree(m_SideSplittedPanel,-1,false,true);
   m_Tree->SetListener(Listener);
   m_Tree->SetSize(-1,300);
   m_Tree->SetTitle(" vme hierarchy: ");
   m_Notebook->AddPage(m_SideSplittedPanel,_("data tree"),true);
+
+  if(style == SINGLE_NOTEBOOK || 
+	  style ==  DOUBLE_NOTEBOOK ||
+	  style ==  SINGLE_NOTEBOOK_EMPTY_BOTTOM) { 
+	  
+  } else {
+	  m_Tree->GetTree()->Enable(false);
+  }
 
   //view property panel
   m_ViewPropertyPanel = new mafGUIHolder(m_Notebook,-1,false,true);
@@ -73,7 +82,7 @@ mafSideBar::mafSideBar(wxWindow* parent, int id, mafObserver *Listener, long sty
   m_OpPanel->Push(empty_op);
   m_Notebook->AddPage(m_OpPanel ,_("operation"));
 
-  if (style == DOUBLE_NOTEBOOK)
+  if (style == DOUBLE_NOTEBOOK || style == DOUBLE_NOTEBOOK_NO_TREE)
   {
     m_VmeNotebook = new wxNotebook(m_SideSplittedPanel,-1);
     m_VmeNotebook->SetFont(wxFont(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT)));
@@ -88,7 +97,7 @@ mafSideBar::mafSideBar(wxWindow* parent, int id, mafObserver *Listener, long sty
     m_SideSplittedPanel->SetMinimumPaneSize(50);
     m_SideSplittedPanel->SplitHorizontally(m_Tree,m_VmeNotebook);
   }
-  else if (style == SINGLE_NOTEBOOK_EMPTY_BOTTOM)
+  else if (style == SINGLE_NOTEBOOK_EMPTY_BOTTOM || style == SINGLE_NOTEBOOK_EMPTY_BOTTOM_NO_TREE)
   {
 	      m_VmePanel = new mafGUIHolder(m_Notebook,-1,false,true);
     m_Notebook->AddPage(m_VmePanel ,_("vme"));
@@ -98,7 +107,7 @@ mafSideBar::mafSideBar(wxWindow* parent, int id, mafObserver *Listener, long sty
     m_SideSplittedPanel->SetMinimumPaneSize(5);
     m_SideSplittedPanel->SplitHorizontally(m_Tree,m_VmeOutputPanel);
   }
-  else if (style == SINGLE_NOTEBOOK)
+  else if (style == SINGLE_NOTEBOOK || style == SINGLE_NOTEBOOK_NO_TREE)
   {
     m_VmePanel = new mafGUIHolder(m_Notebook,-1,false,true);
     m_Notebook->AddPage(m_VmePanel ,_("vme"));
