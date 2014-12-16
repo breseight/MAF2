@@ -336,7 +336,8 @@ void mafGUIMDIFrame::OnIdle(wxIdleEvent& event)
     }
   }
 #endif
-   //mafEventMacro(mafEvent(this, ID_PROTECTION_CHECK));
+   //Protection check for vertical application
+   mafEventMacro(mafEvent(this, ID_PROTECTION_CHECK));
 }
 //----------------------------------------------------------------------------
 void mafGUIMDIFrame::FreeMemorySizeOnIdle(wxIdleEvent& event)
