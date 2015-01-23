@@ -155,7 +155,7 @@ void mafGizmoRotateCircle::CreatePipeline()
   // tube filter the circle 
   m_CircleTF = vtkTubeFilter::New();
   m_CircleTF->SetInput(m_CleanCircle->GetOutput());
-  m_CircleTF->SetRadius(d / 100);
+  m_CircleTF->SetRadius(d / 200);
   m_CircleTF->SetNumberOfSides(20);
   
   // create rotation transform and rotation TPDF
