@@ -146,6 +146,9 @@ public:
   /** return the current rwi */
   mafRWIBase *GetCurrentRwi();
 
+  /** Informs if the measurement is done */
+  bool HasMeasurementEnded() {return m_EndMeasure; }
+
 protected:
 	mafInteractor2DDistance();
 	virtual ~mafInteractor2DDistance();
