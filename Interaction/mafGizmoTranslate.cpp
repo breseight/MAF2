@@ -567,7 +567,7 @@ void mafGizmoTranslate::SetArrowLength(double length)
 	{
 		if(m_GTAxis[arrowNumber]) m_GTAxis[arrowNumber]->SetConeLength(length/2);
 		if(m_GTAxis[arrowNumber]) m_GTAxis[arrowNumber]->SetCylinderLength(length);
-		if(m_GTAxis[arrowNumber]) m_GTAxis[arrowNumber]->SetConeRadius(length/18.);
+		if(m_GTAxis[arrowNumber]) m_GTAxis[arrowNumber]->SetConeRadius(length/12.);
 		if(m_GTPlane[arrowNumber]) m_GTPlane[arrowNumber]->SetSizeLength(length);
 	}
 
