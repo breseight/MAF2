@@ -118,6 +118,15 @@ void mafGUISettingsDialog::OnEvent(mafEventBase *maf_event)
   }
 }
 //----------------------------------------------------------------------------
+void mafGUISettingsDialog::OnPageSelected(wxString name)
+//----------------------------------------------------------------------------
+{
+		Page *page = GetPageByName(name);
+		if(page)
+		m_Guih->Put(page->ui);
+
+}
+//----------------------------------------------------------------------------
 void mafGUISettingsDialog::AddRoot()
 //----------------------------------------------------------------------------
 {
@@ -182,4 +191,11 @@ mafGUISettingsDialog::Page* mafGUISettingsDialog::GetPageByName(wxString name)
     if(p && p->label == name) return p;
   }
   return NULL;
+}
+//----------------------------------------------------------------------------
+void mafGUISettingsDialog::CloseDialog()
+//----------------------------------------------------------------------------
+{
+	m_Dialog->EnableClose(true);
+	m_Dialog->Close();
 }

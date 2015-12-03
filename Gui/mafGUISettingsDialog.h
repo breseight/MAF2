@@ -60,6 +60,10 @@ public:
   /** Show the Settings Dialog. */
 	bool ShowModal();
 
+    void OnPageSelected(wxString name);
+	mafGUIDialog* GetDialog() {return m_Dialog;};
+	void CloseDialog();
+
 protected:  
 
   struct Page {
@@ -77,5 +81,6 @@ protected:
   void  AddRoot();
   /** retrieve the page through the name */
   Page* GetPageByName(wxString name);
+
 };
 #endif // _mafGUISettingsDialog_H_
